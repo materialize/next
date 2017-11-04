@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Parallax Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="bin/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="extras/noUiSlider/nouislider.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    header,main,footer {
+    padding-left:300px;
+}
+
+@media only screen and (max-width:992px){
+    header,main,footer {
+        padding-left:0;
+    }
+}
+
+  </style>
+</head>
+<body>
+
+<div class="row">
+  <div class="input-field col s12">
+    <input type="hidden" value="lol">
+  </div>
+</div>
+<div class="row">
+  <div class="input-field col s12">
+    <!-- Leaving out the .validate class here -->
+    <input id="email" class="invalid" type="email">
+    <label for="email" >Email</label>
+    <span class="helper-text" data-success="long success that results in various lines" class="active" data-error="long error that results in various lines"></span>
+  </div>
+</div>
+
+  <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+
+  <div class="input-field col s12">
+    <select>
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+
+
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+  <script src="bin/materialize.js"></script>
+  <!-- <script src="js/init.js"></script> -->
+<script src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>
+  <script>
+(function($){
+  $(document).ready(function(){
+
+
+    Materialize.Select.init($('select'));
+
+  }); // end of document ready
+})(cash); // end of jQuery name space
+  </script>
+
+  </body>
+</html>
