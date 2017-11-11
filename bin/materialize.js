@@ -1792,57 +1792,14 @@ if (typeof define === "function" && define.amd) {
   define("M", [], function () {
     return M;
   });
-}
 
-// CommonJS
-if (typeof exports !== 'undefined' && !exports.nodeType) {
+  // Common JS
+} else if (typeof exports !== 'undefined' && !exports.nodeType) {
   if (typeof module !== 'undefined' && !module.nodeType && module.exports) {
     exports = module.exports = M;
   }
   exports.default = M;
 }
-
-/*
- * raf.js
- * https://github.com/ngryman/raf.js
- *
- * original requestAnimationFrame polyfill by Erik Möller
- * inspired from paul_irish gist and post
- *
- * Copyright (c) 2013 ngryman
- * Licensed under the MIT license.
- */
-(function (window) {
-  var lastTime = 0,
-      vendors = ['webkit', 'moz'],
-      requestAnimationFrame = window.requestAnimationFrame,
-      cancelAnimationFrame = window.cancelAnimationFrame,
-      i = vendors.length;
-
-  // try to un-prefix existing raf
-  while (--i >= 0 && !requestAnimationFrame) {
-    requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
-    cancelAnimationFrame = window[vendors[i] + 'CancelRequestAnimationFrame'];
-  }
-
-  // polyfill with setTimeout fallback
-  // heavily inspired from @darius gist mod: https://gist.github.com/paulirish/1579671#comment-837945
-  if (!requestAnimationFrame || !cancelAnimationFrame) {
-    requestAnimationFrame = function (callback) {
-      var now = +Date.now(),
-          nextTime = Math.max(lastTime + 16, now);
-      return setTimeout(function () {
-        callback(lastTime = nextTime);
-      }, nextTime - now);
-    };
-
-    cancelAnimationFrame = clearTimeout;
-  }
-
-  // export to window
-  window.requestAnimationFrame = requestAnimationFrame;
-  window.cancelAnimationFrame = cancelAnimationFrame;
-})(window);
 
 M.keys = {
   TAB: 9,
@@ -6675,6 +6632,96 @@ if (Vel) {
     });
   };
 
+  M.validate_field = function (object) {
+    var hasLength = object.attr('data-length') !== null;
+    var lenAttr = parseInt(object.attr('data-length'));
+    var len = object[0].value.length;
+
+    if (len === 0 && object[0].validity.badInput === false && !object.is(':required')) {
+      if (object.hasClass('validate')) {
+        object.removeClass('valid');
+        object.removeClass('invalid');
+      }
+    } else {
+      if (object.hasClass('validate')) {
+        // Check for character counter attributes
+        if (object.is(':valid') && hasLength && len <= lenAttr || object.is(':valid') && !hasLength) {
+          object.removeClass('invalid');
+          object.addClass('valid');
+        } else {
+          object.removeClass('valid');
+          object.addClass('invalid');
+        }
+      }
+    }
+  };
+
+  M.textareaAutoResize = function ($textarea) {
+    // Textarea Auto Resize
+    var hiddenDiv = $('.hiddendiv').first();
+    if (!hiddenDiv.length) {
+      hiddenDiv = $('<div class="hiddendiv common"></div>');
+      $('body').append(hiddenDiv);
+    }
+
+    // Set font properties of hiddenDiv
+    var fontFamily = $textarea.css('font-family');
+    var fontSize = $textarea.css('font-size');
+    var lineHeight = $textarea.css('line-height');
+    var padding = $textarea.css('padding');
+
+    if (fontSize) {
+      hiddenDiv.css('font-size', fontSize);
+    }
+    if (fontFamily) {
+      hiddenDiv.css('font-family', fontFamily);
+    }
+    if (lineHeight) {
+      hiddenDiv.css('line-height', lineHeight);
+    }
+    if (padding) {
+      hiddenDiv.css('padding', padding);
+    }
+
+    // Set original-height, if none
+    if (!$textarea.data('original-height')) {
+      $textarea.data('original-height', $textarea.height());
+    }
+
+    if ($textarea.attr('wrap') === 'off') {
+      hiddenDiv.css('overflow-wrap', 'normal').css('white-space', 'pre');
+    }
+
+    hiddenDiv.text($textarea[0].value + '\n');
+    var content = hiddenDiv.html().replace(/\n/g, '<br>');
+    hiddenDiv.html(content);
+
+    // When textarea is hidden, width goes crazy.
+    // Approximate with half of window size
+
+    if ($textarea.css('display') !== 'hidden') {
+      hiddenDiv.css('width', $textarea.width() + 'px');
+    } else {
+      hiddenDiv.css('width', $(window).width() / 2 + 'px');
+    }
+
+    /**
+     * Resize if the new height is greater than the
+     * original height of the textarea
+     */
+    if ($textarea.data('original-height') <= hiddenDiv.innerHeight()) {
+      $textarea.css('height', hiddenDiv.innerHeight() + 'px');
+    } else if ($textarea[0].value.length < $textarea.data('previous-length')) {
+      /**
+       * In case the new height is less than original height, it
+       * means the textarea has less text than before
+       * So we set the height to the original one
+       */
+      $textarea.css('height', $textarea.data('original-height') + 'px');
+    }
+    $textarea.data('previous-length', $textarea[0].value.length);
+  };
+
   $(document).ready(function () {
     // Text based inputs
     var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], textarea';
@@ -6684,7 +6731,7 @@ if (Vel) {
       if (this.value.length !== 0 || $(this).attr('placeholder') !== null) {
         $(this).siblings('label').addClass('active');
       }
-      validate_field($(this));
+      M.validate_field($(this));
     });
 
     // Add active if input element has been pre-populated on document ready
@@ -6739,117 +6786,25 @@ if (Vel) {
           selector += ", label";
         }
         $inputElement.siblings(selector).removeClass('active');
-        validate_field($inputElement);
+        M.validate_field($inputElement);
       }
     }, true);
-
-    window.validate_field = function (object) {
-      var hasLength = object.attr('data-length') !== null;
-      var lenAttr = parseInt(object.attr('data-length'));
-      var len = object[0].value.length;
-
-      if (len === 0 && object[0].validity.badInput === false && !object.is(':required')) {
-        if (object.hasClass('validate')) {
-          object.removeClass('valid');
-          object.removeClass('invalid');
-        }
-      } else {
-        if (object.hasClass('validate')) {
-          // Check for character counter attributes
-          if (object.is(':valid') && hasLength && len <= lenAttr || object.is(':valid') && !hasLength) {
-            object.removeClass('invalid');
-            object.addClass('valid');
-          } else {
-            object.removeClass('valid');
-            object.addClass('invalid');
-          }
-        }
-      }
-    };
 
     // Radio and Checkbox focus class
     var radio_checkbox = 'input[type=radio], input[type=checkbox]';
     $(document).on('keyup', radio_checkbox, function (e) {
       // TAB, check if tabbing to radio or checkbox.
-      if (e.which === 9) {
+      if (e.which === M.keys.TAB) {
         $(this).addClass('tabbed');
         var $this = $(this);
         $this.one('blur', function (e) {
-
           $(this).removeClass('tabbed');
         });
         return;
       }
     });
 
-    // Textarea Auto Resize
-    var hiddenDiv = $('.hiddendiv').first();
-    if (!hiddenDiv.length) {
-      hiddenDiv = $('<div class="hiddendiv common"></div>');
-      $('body').append(hiddenDiv);
-    }
     var text_area_selector = '.materialize-textarea';
-
-    function textareaAutoResize($textarea) {
-      // Set font properties of hiddenDiv
-
-      var fontFamily = $textarea.css('font-family');
-      var fontSize = $textarea.css('font-size');
-      var lineHeight = $textarea.css('line-height');
-      var padding = $textarea.css('padding');
-
-      if (fontSize) {
-        hiddenDiv.css('font-size', fontSize);
-      }
-      if (fontFamily) {
-        hiddenDiv.css('font-family', fontFamily);
-      }
-      if (lineHeight) {
-        hiddenDiv.css('line-height', lineHeight);
-      }
-      if (padding) {
-        hiddenDiv.css('padding', padding);
-      }
-
-      // Set original-height, if none
-      if (!$textarea.data('original-height')) {
-        $textarea.data('original-height', $textarea.height());
-      }
-
-      if ($textarea.attr('wrap') === 'off') {
-        hiddenDiv.css('overflow-wrap', 'normal').css('white-space', 'pre');
-      }
-
-      hiddenDiv.text($textarea[0].value + '\n');
-      var content = hiddenDiv.html().replace(/\n/g, '<br>');
-      hiddenDiv.html(content);
-
-      // When textarea is hidden, width goes crazy.
-      // Approximate with half of window size
-
-      if ($textarea.css('display') !== 'hidden') {
-        hiddenDiv.css('width', $textarea.width() + 'px');
-      } else {
-        hiddenDiv.css('width', $(window).width() / 2 + 'px');
-      }
-
-      /**
-       * Resize if the new height is greater than the
-       * original height of the textarea
-       */
-      if ($textarea.data('original-height') <= hiddenDiv.innerHeight()) {
-        $textarea.css('height', hiddenDiv.innerHeight() + 'px');
-      } else if ($textarea[0].value.length < $textarea.data('previous-length')) {
-        /**
-         * In case the new height is less than original height, it
-         * means the textarea has less text than before
-         * So we set the height to the original one
-         */
-        $textarea.css('height', $textarea.data('original-height') + 'px');
-      }
-      $textarea.data('previous-length', $textarea[0].value.length);
-    }
-
     $(text_area_selector).each(function () {
       var $textarea = $(this);
       /**
@@ -6861,13 +6816,13 @@ if (Vel) {
     });
 
     $(document).on('keyup', text_area_selector, function () {
-      textareaAutoResize($(this));
+      M.textareaAutoResize($(this));
     });
     $(document).on('keydown', text_area_selector, function () {
-      textareaAutoResize($(this));
+      M.textareaAutoResize($(this));
     });
     $(document).on('autoresize', text_area_selector, function () {
-      textareaAutoResize($(this));
+      M.textareaAutoResize($(this));
     });
 
     // File Input Path
@@ -8870,9 +8825,8 @@ if (Vel) {
         // yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
         yearHtml = '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select>';
 
-        if (c === 0) {
-          html += '<button class="month-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
-        }
+        var leftArrow = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/><path d="M0-.5h24v24H0z" fill="none"/></svg>';
+        html += '<button class="month-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + leftArrow + '</button>';
 
         html += '<div class="selects-container">';
         if (opts.showMonthAfterYear) {
@@ -8891,7 +8845,8 @@ if (Vel) {
         }
 
         // if (c === (this.options.numberOfMonths - 1) ) {
-        html += '<button class="month-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
+        var rightArrow = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/><path d="M0-.25h24v24H0z" fill="none"/></svg>';
+        html += '<button class="month-next' + (next ? '' : ' is-disabled') + '" type="button">' + rightArrow + '</button>';
         // }
 
         return html += '</div>';
@@ -9017,13 +8972,12 @@ if (Vel) {
         }
 
         var $target = $(e.target);
-
         if (!$target.hasClass('is-disabled')) {
           if ($target.hasClass('datepicker-day-button') && !$target.hasClass('is-empty') && !$target.parent().hasClass('is-disabled')) {
             this.setDate(new Date(e.target.getAttribute('data-pika-year'), e.target.getAttribute('data-pika-month'), e.target.getAttribute('data-pika-day')));
-          } else if ($target.hasClass('month-prev')) {
+          } else if ($target.closest('.month-prev').length) {
             this.prevMonth();
-          } else if ($target.hasClass('month-next')) {
+          } else if ($target.closest('.month-next').length) {
             this.nextMonth();
           }
         }
@@ -11417,7 +11371,7 @@ if (Vel) {
         this._setValueToInput();
 
         // Add caret
-        var dropdownIcon = $('<i class="caret material-icons">arrow_drop_down</i>');
+        var dropdownIcon = $('<svg class="caret" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
         this.$el.before(dropdownIcon[0]);
 
         // Initialize dropdown
