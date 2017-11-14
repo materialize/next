@@ -562,9 +562,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
     on: function (eventName, delegate, callback, runOnce) {
       // jshint ignore:line
-
       var originalCallback;
-
       if (!isString(eventName)) {
         for (var key in eventName) {
           this.on(key, delegate, eventName[key]);
@@ -586,11 +584,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         originalCallback = callback;
         callback = function (e) {
           var t = e.target;
-
           while (!matches(t, delegate)) {
-            if (t === this) {
+            if (t === this || t === null) {
               return t = false;
             }
+
             t = t.parentNode;
           }
 
@@ -7649,18 +7647,6 @@ if (Vel) {
           this.options.onChipSelect.call(this, this.$el, this.$chip);
         }
       }
-
-      /**
-       * Deselect chip
-       * @param {Number} chip
-       */
-
-    }, {
-      key: "deselectChip",
-      value: function deselectChip(chipIndex) {
-        var $chip = this.$chips.eq(chipIndex);
-        this._selectedChip = null;
-      }
     }], [{
       key: "init",
       value: function init($els, options) {
@@ -8436,6 +8422,10 @@ if (Vel) {
       this.el.M_Datepicker = this;
 
       this.options = $.extend({}, Datepicker.defaults, options);
+
+      // Remove time component from minDate and maxDate options
+      if (this.options.minDate) this.options.minDate.setHours(0, 0, 0, 0);
+      if (this.options.maxDate) this.options.maxDate.setHours(0, 0, 0, 0);
 
       this.id = M.guid();
 
