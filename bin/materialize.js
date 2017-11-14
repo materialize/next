@@ -4470,8 +4470,8 @@ if (Vel) {
 
         this.xMovement = 0, this.yMovement = 0;
 
-        targetTop = origin.offsetTop;
-        targetLeft = origin.offsetLeft;
+        targetTop = origin.getBoundingClientRect().top + M.getDocumentScrollTop();
+        targetLeft = origin.getBoundingClientRect().left + M.getDocumentScrollLeft();
 
         if (this.options.position === 'top') {
           targetTop += -tooltipHeight - margin;
@@ -8341,11 +8341,7 @@ if (Vel) {
   var _defaults = {
 
     // the default output format for the input field value
-    format: 'YYYY-MM-DD',
-
-    // the toString function which gets passed a current date object and format
-    // and returns a string
-    toString: null,
+    format: 'mmm dd, yyyy',
 
     // Used to create date object from current input string
     parse: null,
@@ -8510,14 +8506,22 @@ if (Vel) {
     }, {
       key: "toString",
       value: function toString(format) {
+        var _this35 = this;
+
         format = format || this.options.format;
         if (!Datepicker._isDate(this.date)) {
           return '';
         }
-        if (this.options.toString) {
-          return this.options.toString(this.date, format);
-        }
-        return this.date.toDateString();
+
+        var formatArray = format.split(/(d{1,4}|m{1,4}|y{4}|yy|!.)/g);
+        var formattedDate = formatArray.map(function (label) {
+          if (_this35.formats[label]) {
+            return _this35.formats[label]();
+          } else {
+            return label;
+          }
+        }).join('');
+        return formattedDate;
       }
     }, {
       key: "setDate",
@@ -8551,7 +8555,7 @@ if (Vel) {
         this.gotoDate(this.date);
 
         if (!preventOnSelect && typeof this.options.onSelect === 'function') {
-          this.options.onSelect.call(this, this.getDate());
+          this.options.onSelect.call(this, this.date);
         }
       }
     }, {
@@ -8927,6 +8931,8 @@ if (Vel) {
     }, {
       key: "_setupVariables",
       value: function _setupVariables() {
+        var _this36 = this;
+
         this.$modalEl = $(Datepicker._template);
         this.modalEl = this.$modalEl[0];
 
@@ -8937,6 +8943,34 @@ if (Vel) {
         this.clearBtn = this.modalEl.querySelector('.datepicker-clear');
         this.todayBtn = this.modalEl.querySelector('.datepicker-today');
         this.doneBtn = this.modalEl.querySelector('.datepicker-done');
+
+        this.formats = {
+
+          dd: function () {
+            return _this36.date.getDate();
+          },
+          ddd: function () {
+            return _this36.options.i18n.weekdaysShort[_this36.date.getDay()];
+          },
+          dddd: function () {
+            return _this36.options.i18n.weekdays[_this36.date.getDay()];
+          },
+          mm: function () {
+            return _this36.date.getMonth() + 1;
+          },
+          mmm: function () {
+            return _this36.options.i18n.monthsShort[_this36.date.getMonth()];
+          },
+          mmmm: function () {
+            return _this36.options.i18n.monthsShort[_this36.date.getMonth()];
+          },
+          yy: function () {
+            return _this36.date.getFullYear().slice(2);
+          },
+          yyyy: function () {
+            return _this36.date.getFullYear();
+          }
+        };
       }
 
       /**
@@ -9412,11 +9446,11 @@ if (Vel) {
     }, {
       key: "_setupModal",
       value: function _setupModal() {
-        var _this35 = this;
+        var _this37 = this;
 
         this.modal = new M.Modal(this.modalEl, {
           complete: function () {
-            _this35.isOpen = false;
+            _this37.isOpen = false;
           }
         });
       }
@@ -9640,7 +9674,7 @@ if (Vel) {
     }, {
       key: "setHand",
       value: function setHand(x, y, roundBy5) {
-        var _this36 = this;
+        var _this38 = this;
 
         var radian = Math.atan2(x, -y),
             isHours = this.currentView === 'hours',
@@ -9695,7 +9729,7 @@ if (Vel) {
             if (!this.vibrateTimer) {
               navigator[this.vibrate](10);
               this.vibrateTimer = setTimeout(function () {
-                _this36.vibrateTimer = null;
+                _this38.vibrateTimer = null;
               }, 100);
             }
           }
@@ -10044,7 +10078,7 @@ if (Vel) {
      * @param {Object} options
      */
     function Carousel(el, options) {
-      var _this37 = this;
+      var _this39 = this;
 
       _classCallCheck(this, Carousel);
 
@@ -10099,8 +10133,8 @@ if (Vel) {
       // Iterate through slides
       this.$indicators = $('<ul class="indicators"></ul>');
       this.$el.find('.carousel-item').each(function (el, i) {
-        _this37.images.push(el);
-        if (_this37.showIndicators) {
+        _this39.images.push(el);
+        if (_this39.showIndicators) {
           var $indicator = $('<li class="indicator-item"></li>');
 
           // Add active to first by default.
@@ -10108,7 +10142,7 @@ if (Vel) {
             $indicator[0].classList.add('active');
           }
 
-          _this37.$indicators.append($indicator);
+          _this39.$indicators.append($indicator);
         }
       });
       if (this.showIndicators) {
@@ -10121,7 +10155,7 @@ if (Vel) {
       ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
         var e = prefix + 'Transform';
         if (typeof document.body.style[e] !== 'undefined') {
-          _this37.xform = e;
+          _this39.xform = e;
           return false;
         }
         return true;
@@ -10150,7 +10184,7 @@ if (Vel) {
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
-        var _this38 = this;
+        var _this40 = this;
 
         this._handleCarouselTapBound = this._handleCarouselTap.bind(this);
         this._handleCarouselDragBound = this._handleCarouselDrag.bind(this);
@@ -10172,7 +10206,7 @@ if (Vel) {
         if (this.showIndicators && this.$indicators) {
           this._handleIndicatorClickBound = this._handleIndicatorClick.bind(this);
           this.$indicators.find('.indicator-item').each(function (el, i) {
-            el.addEventListener('click', _this38._handleIndicatorClickBound);
+            el.addEventListener('click', _this40._handleIndicatorClickBound);
           });
         }
 
@@ -10190,7 +10224,7 @@ if (Vel) {
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
-        var _this39 = this;
+        var _this41 = this;
 
         if (typeof window.ontouchstart !== 'undefined') {
           this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
@@ -10205,7 +10239,7 @@ if (Vel) {
 
         if (this.showIndicators && this.$indicators) {
           this.$indicators.find('.indicator-item').each(function (el, i) {
-            el.removeEventListener('click', _this39._handleIndicatorClickBound);
+            el.removeEventListener('click', _this41._handleIndicatorClickBound);
           });
         }
 
@@ -10391,7 +10425,7 @@ if (Vel) {
     }, {
       key: "_setCarouselHeight",
       value: function _setCarouselHeight(imageOnly) {
-        var _this40 = this;
+        var _this42 = this;
 
         var firstSlide = this.$el.find('.carousel-item.active').length ? this.$el.find('.carousel-item.active').first() : this.$el.find('.carousel-item').first();
         var firstImage = firstSlide.find('img').first();
@@ -10411,7 +10445,7 @@ if (Vel) {
           } else {
             // Get height when image is loaded normally
             firstImage.one('load', function (el, i) {
-              _this40.$el.css('height', el.offsetHeight + 'px');
+              _this42.$el.css('height', el.offsetHeight + 'px');
             });
           }
         } else if (!imageOnly) {
@@ -10517,7 +10551,7 @@ if (Vel) {
     }, {
       key: "_scroll",
       value: function _scroll(x) {
-        var _this41 = this;
+        var _this43 = this;
 
         // Track scrolling state
         if (!this.$el.hasClass('scrolling')) {
@@ -10527,7 +10561,7 @@ if (Vel) {
           window.clearTimeout(this.scrollingTimeout);
         }
         this.scrollingTimeout = window.setTimeout(function () {
-          _this41.$el.removeClass('scrolling');
+          _this43.$el.removeClass('scrolling');
         }, this.options.duration);
 
         // Start actual scroll
@@ -11214,14 +11248,14 @@ if (Vel) {
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
-        var _this42 = this;
+        var _this44 = this;
 
         this._handleSelectChangeBound = this._handleSelectChange.bind(this);
         this._handleOptionClickBound = this._handleOptionClick.bind(this);
         this._handleInputClickBound = this._handleInputClick.bind(this);
 
         $(this.dropdownOptions).find('li:not(.optgroup)').each(function (el) {
-          el.addEventListener('click', _this42._handleOptionClickBound);
+          el.addEventListener('click', _this44._handleOptionClickBound);
         });
         this.el.addEventListener('change', this._handleSelectChangeBound);
         this.input.addEventListener('click', this._handleInputClickBound);
@@ -11234,10 +11268,10 @@ if (Vel) {
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
-        var _this43 = this;
+        var _this45 = this;
 
         $(this.dropdownOptions).find('li:not(.optgroup)').each(function (el) {
-          el.removeEventListener('click', _this43._handleOptionClickBound);
+          el.removeEventListener('click', _this45._handleOptionClickBound);
         });
         this.el.removeEventListener('change', this._handleSelectChangeBound);
         this.input.removeEventListener('click', this._handleInputClickBound);
@@ -11307,7 +11341,7 @@ if (Vel) {
     }, {
       key: "_setupDropdown",
       value: function _setupDropdown() {
-        var _this44 = this;
+        var _this46 = this;
 
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add();
@@ -11331,24 +11365,24 @@ if (Vel) {
             if ($(el).is('option')) {
               // Direct descendant option.
               var optionEl = void 0;
-              if (_this44.isMultiple) {
-                optionEl = _this44._appendOptionWithIcon(_this44.$el, el, 'multiple');
+              if (_this46.isMultiple) {
+                optionEl = _this46._appendOptionWithIcon(_this46.$el, el, 'multiple');
               } else {
-                optionEl = _this44._appendOptionWithIcon(_this44.$el, el);
+                optionEl = _this46._appendOptionWithIcon(_this46.$el, el);
               }
 
               if ($(el).prop('selected')) {
-                _this44.$selectedOptions.add(optionEl);
+                _this46.$selectedOptions.add(optionEl);
               }
             } else if ($(el).is('optgroup')) {
               // Optgroup.
               var selectOptions = $(el).children('option');
-              $(_this44.dropdownOptions).append($('<li class="optgroup"><span>' + el.getAttribute('label') + '</span></li>')[0]);
+              $(_this46.dropdownOptions).append($('<li class="optgroup"><span>' + el.getAttribute('label') + '</span></li>')[0]);
 
               selectOptions.each(function (el) {
-                var optionEl = _this44._appendOptionWithIcon(_this44.$el, el, 'optgroup-option');
+                var optionEl = _this46._appendOptionWithIcon(_this46.$el, el, 'optgroup-option');
                 if ($(el).prop('selected')) {
-                  _this44.$selectedOptions.add(optionEl);
+                  _this46.$selectedOptions.add(optionEl);
                 }
               });
             }
@@ -11495,7 +11529,7 @@ if (Vel) {
     }, {
       key: "_setSelectedStates",
       value: function _setSelectedStates() {
-        var _this45 = this;
+        var _this47 = this;
 
         this.valuesSelected = [];
         var $onlyOptions = $(this.dropdownOptions).find('li:not(.optgroup)');
@@ -11504,8 +11538,8 @@ if (Vel) {
 
           if ($(el).prop('selected')) {
             option.find('input[type="checkbox"]').prop("checked", true);
-            _this45._activateOption($(_this45.dropdownOptions), option);
-            _this45.valuesSelected.push(i);
+            _this47._activateOption($(_this47.dropdownOptions), option);
+            _this47.valuesSelected.push(i);
           } else {
             option.find('input[type="checkbox"]').prop("checked", false);
             option.removeClass('selected');

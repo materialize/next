@@ -8573,6 +8573,7 @@ input[type=range]:focus:not(.active)::-ms-thumb {
 .datepicker-modal {
   max-width: 325px;
   min-width: 300px;
+  max-height: none;
 }
 
 .datepicker-container.modal-content {
@@ -8686,6 +8687,10 @@ input[type=range]:focus:not(.active)::-ms-thumb {
   text-align: center;
 }
 
+.datepicker-table tr {
+  border: none;
+}
+
 .datepicker-table abbr {
   text-decoration: none;
   color: #999;
@@ -8696,13 +8701,13 @@ input[type=range]:focus:not(.active)::-ms-thumb {
   padding: 0;
 }
 
+.datepicker-table td.is-today {
+  color: #26a69a;
+}
+
 .datepicker-table td.is-selected {
   background-color: #26a69a;
   color: #fff;
-}
-
-.datepicker-table td.is-today {
-  color: #26a69a;
 }
 
 .datepicker-table td.is-outside-current-month, .datepicker-table td.is-disabled {
@@ -8776,6 +8781,7 @@ input[type=range]:focus:not(.active)::-ms-thumb {
 /* Timepicker Containers */
 .timepicker-modal {
   max-width: 325px;
+  max-height: none;
 }
 
 .timepicker-container.modal-content {
