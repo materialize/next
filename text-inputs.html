@@ -19,16 +19,16 @@
     <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-      window.liveSettings = {
-        api_key: "a0b49b34b93844c38eaee15690d86413",
-        picker: "bottom-right",
-        detectlang: true,
-        dynamic: true,
-        autocollect: true
-      };
-    </script>
-    <script src="//cdn.transifex.com/live.js"></script>
+    <!-- if !isDemo-->
+    <!--   script.-->
+    <!--     window.liveSettings = {-->
+    <!--       api_key: "a0b49b34b93844c38eaee15690d86413",-->
+    <!--       picker: "bottom-right",-->
+    <!--       detectlang: true,-->
+    <!--       dynamic: true,-->
+    <!--       autocollect: true-->
+    <!--     };-->
+    <!--   script(src='//cdn.transifex.com/live.js')-->
   </head>
   <body>
     <header>
@@ -43,7 +43,7 @@
           </div>
         </div>
       </nav>
-      <div class="container"><a href="#" data-target="nav-mobile" class="button-collapse top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <div class="container"><a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
       <ul id="nav-mobile" class="sidenav sidenav-fixed">
         <li class="logo"><a id="logo-container" href="/" class="brand-logo">
             <object id="front-page-logo" type="image/svg+xml" data="res/materialize.svg">Your browser does not support SVG</object></a></li>
@@ -128,7 +128,7 @@
         </li>
         <li class="bold"><a href="mobile.html" class="waves-effect waves-teal">Mobile</a></li>
         <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
-        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes<span class="new badge"></span></a></li>
+        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
       </ul>
       <div class="patreon-ad"><a href="https://www.patreon.com/materialize" target="_blank" class="waves-effect">Become a Patron</a></div>
     </header>
@@ -143,7 +143,7 @@
         </p>
 
         <h3 class="header">Input fields</h3>
-        <p>Text fields allow user input. The border should light up simply and clearly indicating which field the user is currently editing. You must have a <code class="language-markup">.input-field</code> div wrapping your input and label. This helps our jQuery animate the label. This is only used in our Input and Textarea form elements.</p>
+        <p>Text fields allow user input. The border should light up simply and clearly indicating which field the user is currently editing. You must have a <code class="language-markup">.input-field</code> div wrapping your input and label. This is only used in our Input and Textarea form elements.</p>
         <p>The validate class leverages HTML5 validation and will add a <code class="language-markup">valid</code> and <code class="language-markup">invalid</code> class accordingly. If you don't want the Green and Red validation states, just remove the <code class="language-markup">validate</code> class from your inputs.</p>
         <br>
           <form>
@@ -232,7 +232,7 @@
   &lt;/div>
         </code></pre><br>
         <h5>Prefilling Text Inputs</h5>
-        <p>If you are having trouble with the labels overlapping prefilled content, Try adding <code class="language-markup">class="active"</code> to the label. <br />You can also call the function <code class="language-javascript">Materialize.updateTextFields();</code> to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.</p>
+        <p>If you are having trouble with the labels overlapping prefilled content, Try adding <code class="language-markup">class="active"</code> to the label. <br />You can also call the function <code class="language-javascript">M.updateTextFields();</code> to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.</p>
         <div class="row">
           <div class="input-field col s6">
             <input value="Alvin" id="first_name2" type="text" class="validate">
@@ -251,7 +251,7 @@
 
         <pre><code class="language-javascript">
   $(document).ready(function() {
-    Materialize.updateTextFields();
+    M.updateTextFields();
   });
         </code></pre>
         <br>
@@ -361,7 +361,7 @@
       <!-- Textarea Section -->
       <div id="textarea" class="section scrollspy">
         <h3 class="header">Textarea</h3>
-        <p>Textareas allow larger expandable user input. The border should light up simply and clearly indicating which field the user is currently editing. You must have a <code class="language-markup">.input-field</code> div wrapping your input and label. This helps our jQuery animate the label. This is only used in our Input and Textarea form elements.</p>
+        <p>Textareas allow larger expandable user input. The border should light up simply and clearly indicating which field the user is currently editing. You must have a <code class="language-markup">.input-field</code> div wrapping your input and label. This is only used in our Input and Textarea form elements.</p>
         <p><strong>Textareas will auto resize to the text inside.</strong></p>
 
 
@@ -575,6 +575,20 @@
                 <div class="g-follow" data-annotation="bubble" data-height="24" data-href="https://plus.google.com/108619793845925798422" data-rel="publisher"></div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5>Patreon Sponsors</h5>
+              </div>
+              <div class="col l3 s12">
+                <div class="patreon-footer-ad">
+                  <a href="http://lucidocean.com" target="_blank">
+                    <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div class="footer-copyright">
               © 2014-2017 Materialize, All rights reserved.
               <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>

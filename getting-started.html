@@ -19,20 +19,20 @@
     <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-      window.liveSettings = {
-        api_key: "a0b49b34b93844c38eaee15690d86413",
-        picker: "bottom-right",
-        detectlang: true,
-        dynamic: true,
-        autocollect: true
-      };
-    </script>
-    <script src="//cdn.transifex.com/live.js"></script>
+    <!-- if !isDemo-->
+    <!--   script.-->
+    <!--     window.liveSettings = {-->
+    <!--       api_key: "a0b49b34b93844c38eaee15690d86413",-->
+    <!--       picker: "bottom-right",-->
+    <!--       detectlang: true,-->
+    <!--       dynamic: true,-->
+    <!--       autocollect: true-->
+    <!--     };-->
+    <!--   script(src='//cdn.transifex.com/live.js')-->
   </head>
   <body>
     <header>
-      <div class="container"><a href="#" data-target="nav-mobile" class="button-collapse top-nav sidenav-trigger waves-effect waves-light circle hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <div class="container"><a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger waves-effect waves-light circle hide-on-large-only"><i class="material-icons">menu</i></a></div>
       <ul id="nav-mobile" class="sidenav sidenav-fixed">
         <li class="logo"><a id="logo-container" href="/" class="brand-logo">
             <object id="front-page-logo" type="image/svg+xml" data="res/materialize.svg">Your browser does not support SVG</object></a></li>
@@ -117,7 +117,7 @@
         </li>
         <li class="bold"><a href="mobile.html" class="waves-effect waves-teal">Mobile</a></li>
         <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
-        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes<span class="new badge"></span></a></li>
+        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
       </ul>
       <div class="patreon-ad"><a href="https://www.patreon.com/materialize" target="_blank" class="waves-effect">Become a Patron</a></div>
     </header>
@@ -154,12 +154,12 @@
           <div class="col s12 m6">
             <h5>Materialize</h5>
             <p>This is the standard version that comes with both the minified and unminified CSS and JavaScript files. This option requires little to no setup. Use this if you are unfamiliar with Sass.</p>
-            <a id="download-source" class="btn waves-effect waves-light" href="https://github.com/Dogfalo/materialize/releases/download/1.0.0-alpha.1/materialize-v1.0.0-alpha.1.zip">Materialize<i class="material-icons right">file_download</i></a>
+            <a id="download-source" class="btn waves-effect waves-light" href="https://github.com/Dogfalo/materialize/releases/download/1.0.0-alpha.2/materialize-v1.0.0-alpha.2.zip">Materialize<i class="material-icons right">file_download</i></a>
           </div>
           <div class="col s12 m6">
             <h5>Sass</h5>
             <p>This version contains the source SCSS files. By choosing this version you have more control over which components to include. You will need a Sass compiler if you choose this option.</p>
-            <a id="download-sass" class="btn waves-effect waves-light" href="https://github.com/Dogfalo/materialize/releases/download/1.0.0-alpha.1/materialize-src-v1.0.0-alpha.1.zip">Source<i class="material-icons right">file_download</i></a>
+            <a id="download-sass" class="btn waves-effect waves-light" href="https://github.com/Dogfalo/materialize/releases/download/1.0.0-alpha.2/materialize-src-v1.0.0-alpha.2.zip">Source<i class="material-icons right">file_download</i></a>
           </div>
           <div class="col s12">
             <br>
@@ -167,10 +167,10 @@
             <p>You can find all the versions of the CDN at <a href="https://cdnjs.com/libraries/materialize">cdnjs</a>.</p>
             <pre><code class="language-markup">
     &lt;!-- Compiled and minified CSS -->
-    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.1/css/materialize.min.css">
+    &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.min.css">
 
     &lt;!-- Compiled and minified JavaScript -->
-    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.1/js/materialize.min.js">&lt;/script>
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js">&lt;/script>
             </code></pre>
           </div>
           <div class="col s12">
@@ -178,7 +178,7 @@
             <h5>NPM</h5>
             <p>You can also get the latest release using NPM. This release contains source files as well as the compiled CSS and JavaScript files.</p>
             <pre><code class="language-bash">
-    npm install materialize-css
+    npm install materialize-css@next
             </code></pre>
           </div>
           <div class="col s12">
@@ -387,6 +387,20 @@
                 <div class="g-follow" data-annotation="bubble" data-height="24" data-href="https://plus.google.com/108619793845925798422" data-rel="publisher"></div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5>Patreon Sponsors</h5>
+              </div>
+              <div class="col l3 s12">
+                <div class="patreon-footer-ad">
+                  <a href="http://lucidocean.com" target="_blank">
+                    <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div class="footer-copyright">
               © 2014-2017 Materialize, All rights reserved.
               <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>

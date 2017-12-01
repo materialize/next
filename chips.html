@@ -19,16 +19,16 @@
     <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-      window.liveSettings = {
-        api_key: "a0b49b34b93844c38eaee15690d86413",
-        picker: "bottom-right",
-        detectlang: true,
-        dynamic: true,
-        autocollect: true
-      };
-    </script>
-    <script src="//cdn.transifex.com/live.js"></script>
+    <!-- if !isDemo-->
+    <!--   script.-->
+    <!--     window.liveSettings = {-->
+    <!--       api_key: "a0b49b34b93844c38eaee15690d86413",-->
+    <!--       picker: "bottom-right",-->
+    <!--       detectlang: true,-->
+    <!--       dynamic: true,-->
+    <!--       autocollect: true-->
+    <!--     };-->
+    <!--   script(src='//cdn.transifex.com/live.js')-->
   </head>
   <body>
     <header>
@@ -43,7 +43,7 @@
           </div>
         </div>
       </nav>
-      <div class="container"><a href="#" data-target="nav-mobile" class="button-collapse top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <div class="container"><a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
       <ul id="nav-mobile" class="sidenav sidenav-fixed">
         <li class="logo"><a id="logo-container" href="/" class="brand-logo">
             <object id="front-page-logo" type="image/svg+xml" data="res/materialize.svg">Your browser does not support SVG</object></a></li>
@@ -128,7 +128,7 @@
         </li>
         <li class="bold"><a href="mobile.html" class="waves-effect waves-teal">Mobile</a></li>
         <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
-        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes<span class="new badge"></span></a></li>
+        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
       </ul>
       <div class="patreon-ad"><a href="https://www.patreon.com/materialize" target="_blank" class="waves-effect">Become a Patron</a></div>
     </header>
@@ -180,24 +180,30 @@
       <div id="basic" class="section scrollspy">
         <h3 class="header">Javascript Plugin</h4>
         <p class="caption">To add tags, just enter your tag text and press enter. You can delete them by clicking on the close icon or by using your delete button.</p>
-        <div class="chips"><input></div>
+        <div class="chips"></div>
         <br>
         <p class="caption">Set initial tags.</p>
-        <div class="chips chips-initial"><input></div>
+        <div class="chips chips-initial"></div>
         <br>
         <p class="caption">Use placeholders and override hint texts.</p>
-        <div class="chips chips-placeholder"><input></div>
+        <div class="chips chips-placeholder"></div>
         <br>
         <p class="caption">Use autocomplete with chips.</p>
-        <div class="chips chips-autocomplete"><input></div>
+        <div class="chips chips-autocomplete"></div>
       </div>
 
-      <div id="properties" class="section scrollspy">
+      <div id="options" class="section scrollspy">
         <pre><code class="language-markup">
+  &lt;!-- Default with no input (automatically generated)  -->
   &lt;div class="chips">&lt;/div>
   &lt;div class="chips chips-initial">&lt;/div>
   &lt;div class="chips chips-placeholder">&lt;/div>
   &lt;div class="chips chips-autocomplete">&lt;/div>
+
+  &lt;!-- Customizable input  -->
+  &lt;div class="chips">
+    &lt;input class="custom-class">
+  &lt;/div>
         </code></pre>
         <h3 class="header">Initialization</h3>
         <pre><code class="language-javascript">
@@ -425,8 +431,7 @@
             <li><a href="#contact">Contacts</a></li>
             <li><a href="#tag">Tags</a></li>
             <li><a href="#basic">Plugin</a></li>
-            <li><a href="#properties">Options</a></li>
-            <li><a href="#events">Events</a></li>
+            <li><a href="#options">Options</a></li>
             <li><a href="#methods">Methods</a></li>
             <li><a href="#properties">Properties</a></li>
           </ul>
@@ -462,6 +467,20 @@
                 <div class="g-follow" data-annotation="bubble" data-height="24" data-href="https://plus.google.com/108619793845925798422" data-rel="publisher"></div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5>Patreon Sponsors</h5>
+              </div>
+              <div class="col l3 s12">
+                <div class="patreon-footer-ad">
+                  <a href="http://lucidocean.com" target="_blank">
+                    <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div class="footer-copyright">
               © 2014-2017 Materialize, All rights reserved.
               <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>

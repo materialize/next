@@ -19,16 +19,16 @@
     <link href="css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script>
-      window.liveSettings = {
-        api_key: "a0b49b34b93844c38eaee15690d86413",
-        picker: "bottom-right",
-        detectlang: true,
-        dynamic: true,
-        autocollect: true
-      };
-    </script>
-    <script src="//cdn.transifex.com/live.js"></script>
+    <!-- if !isDemo-->
+    <!--   script.-->
+    <!--     window.liveSettings = {-->
+    <!--       api_key: "a0b49b34b93844c38eaee15690d86413",-->
+    <!--       picker: "bottom-right",-->
+    <!--       detectlang: true,-->
+    <!--       dynamic: true,-->
+    <!--       autocollect: true-->
+    <!--     };-->
+    <!--   script(src='//cdn.transifex.com/live.js')-->
   </head>
   <body>
     <header>
@@ -43,7 +43,7 @@
           </div>
         </div>
       </nav>
-      <div class="container"><a href="#" data-target="nav-mobile" class="button-collapse top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <div class="container"><a href="#" data-target="nav-mobile" class="top-nav sidenav-trigger full hide-on-large-only"><i class="material-icons">menu</i></a></div>
       <ul id="nav-mobile" class="sidenav sidenav-fixed">
         <li class="logo"><a id="logo-container" href="/" class="brand-logo">
             <object id="front-page-logo" type="image/svg+xml" data="res/materialize.svg">Your browser does not support SVG</object></a></li>
@@ -128,7 +128,7 @@
         </li>
         <li class="bold"><a href="mobile.html" class="waves-effect waves-teal">Mobile</a></li>
         <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
-        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes<span class="new badge"></span></a></li>
+        <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
       </ul>
       <div class="patreon-ad"><a href="https://www.patreon.com/materialize" target="_blank" class="waves-effect">Become a Patron</a></div>
     </header>
@@ -266,7 +266,7 @@
         <nav class="nav-extended">
           <div class="nav-wrapper">
             <a href="#" class="brand-logo">Logo</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"><i class="material-icons">menu</i></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
               <li><a href="sass.html">Sass</a></li>
               <li><a href="badges.html">Components</a></li>
@@ -297,7 +297,7 @@
   &lt;nav class="nav-extended">
     &lt;div class="nav-wrapper">
       &lt;a href="#" class="brand-logo">Logo&lt;/a>
-      &lt;a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse">&lt;i class="material-icons">menu&lt;/i>&lt;/a>
+      &lt;a href="#" data-target="mobile-demo" class="sidenav-trigger">&lt;i class="material-icons">menu&lt;/i>&lt;/a>
       &lt;ul id="nav-mobile" class="right hide-on-med-and-down">
         &lt;li>&lt;a href="sass.html">Sass&lt;/a>&lt;/li>
         &lt;li>&lt;a href="badges.html">Components&lt;/a>&lt;/li>
@@ -542,7 +542,7 @@ $(".dropdown-trigger").dropdown();
             <form>
               <div class="input-field">
                 <input id="search-example" type="search" required>
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <label class="label-icon" for="search-example"><i class="material-icons">search</i></label>
                 <i class="material-icons">close</i>
               </div>
             </form>
@@ -574,7 +574,7 @@ $(".dropdown-trigger").dropdown();
         <nav>
           <div class="nav-wrapper">
             <a href="#!" class="brand-logo">Logo</a>
-            <a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse"><i class="material-icons">menu</i></a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
               <li><a href="sass.html">Sass</a></li>
               <li><a href="badges.html">Components</a></li>
@@ -594,12 +594,12 @@ $(".dropdown-trigger").dropdown();
 
         <br>
 
-        <p>When your nav bar is resized, you will see that the links on the right turn into a hamburger icon <i class="material-icons">menu</i>. Take a look at the example below to get this functionality. Add the entire <code class="language-markup">button-collapse</code> line to your <code class="language-markup">nav</code>.</p>
+        <p>When your nav bar is resized, you will see that the links on the right turn into a hamburger icon <i class="material-icons">menu</i>. Take a look at the example below to get this functionality. Add the entire <code class="language-markup">sidenav-trigger</code> line to your <code class="language-markup">nav</code>.</p>
         <pre><code class="language-markup">
   &lt;nav>
     &lt;div class="nav-wrapper">
       &lt;a href="#!" class="brand-logo">Logo&lt;/a>
-      &lt;a href="#" data-target="mobile-demo" class="sidenav-trigger button-collapse">&lt;i class="material-icons">menu</i>&lt;/i>&lt;/a>
+      &lt;a href="#" data-target="mobile-demo" class="sidenav-trigger">&lt;i class="material-icons">menu</i>&lt;/i>&lt;/a>
       &lt;ul class="right hide-on-med-and-down">
         &lt;li>&lt;a href="sass.html">Sass&lt;/a>&lt;/li>
         &lt;li>&lt;a href="badges.html">Components&lt;/a>&lt;/li>
@@ -618,9 +618,16 @@ $(".dropdown-trigger").dropdown();
 
           <br>
         <h5>Initialization</h5>
-        <p>After including the button-collapse line into your navbar, all you have to do now is place this code in your page's <code class="language-javascript">$( document ).ready(function(){})</code> code. This example below assumes you have not modified the classes in the above example. In the case that you have, just change the jQuery selector in the line below to match it.</p>
+        <p>After including the sidenav-trigger line into your navbar, all you have to do now initialize the plugin. This example below assumes you have not modified the classes in the above example. In the case that you have, just change the selector in the line below to match it.</p>
         <pre><code class="language-javascript">
+  var elem = document.querySelector('.sidenav');
+  var instance = new M.Sidenav(elem, options);
+
+  // Or with jQuery
+
+  $(document).ready(function(){
     $('.sidenav').sidenav();
+  });
         </code></pre>
       </div>
 
@@ -678,6 +685,20 @@ $(".dropdown-trigger").dropdown();
                 <div class="g-follow" data-annotation="bubble" data-height="24" data-href="https://plus.google.com/108619793845925798422" data-rel="publisher"></div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s12">
+                <h5>Patreon Sponsors</h5>
+              </div>
+              <div class="col l3 s12">
+                <div class="patreon-footer-ad">
+                  <a href="http://lucidocean.com" target="_blank">
+                    <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+              </div>
+            </div>
+
             <div class="footer-copyright">
               © 2014-2017 Materialize, All rights reserved.
               <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>

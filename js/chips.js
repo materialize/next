@@ -1,4 +1,4 @@
-(function ($, Vel) {
+(function ($) {
   'use strict';
 
   let _defaults = {
@@ -54,8 +54,7 @@
       this.$el.addClass('chips input-field');
       this.chipsData = [];
       this.$chips = $();
-      this.$input = this.$el.find('input');
-      this.$input.addClass('input');
+      this._setupInput();
       this.hasAutocomplete = Object.keys(this.options.autocompleteOptions).length > 0;
 
       // Set input id
@@ -331,7 +330,7 @@
       }
 
       // move input to end
-      this.$el.append(this.$input);
+      this.$el.append(this.$input[0]);
     }
 
     /**
@@ -345,6 +344,19 @@
       };
 
       this.autocomplete = M.Autocomplete.init(this.$input, this.options.autocompleteOptions)[0];
+    }
+
+    /**
+     * Setup Input
+     */
+    _setupInput() {
+      this.$input = this.$el.find('input');
+      if (!this.$input.length) {
+        this.$input = $('<input></input>');
+        this.$el.append(this.$input);
+      }
+
+      this.$input.addClass('input');
     }
 
     /**
@@ -416,7 +428,7 @@
      * @param {Number} chip
      */
     deleteChip(chipIndex) {
-      // let chip = this.chips[chipIndex];
+      let $chip = this.$chips.eq(chipIndex);
       this.$chips.eq(chipIndex).remove();
       this.$chips = this.$chips.filter(function(el) {
         return $(el).index() >= 0;
@@ -426,7 +438,7 @@
 
       // fire chipDelete callback
       if (typeof(this.options.onChipDelete) === 'function') {
-        this.options.onChipDelete.call(this, this.$el, this.$chip);
+        this.options.onChipDelete.call(this, this.$el, $chip[0]);
       }
     }
 
@@ -441,7 +453,7 @@
 
       // fire chipSelect callback
       if (typeof(this.options.onChipSelect) === 'function') {
-        this.options.onChipSelect.call(this, this.$el, this.$chip);
+        this.options.onChipSelect.call(this, this.$el, $chip[0]);
       }
     }
   }

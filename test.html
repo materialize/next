@@ -13,6 +13,10 @@
   <style>
     header,main,footer {
     padding-left:300px;
+
+}
+.container.test {
+  margin-top: 50px;
 }
 
 @media only screen and (max-width:992px){
@@ -24,6 +28,70 @@
   </style>
 </head>
 <body>
+
+<table class="bordered highlight responsive-table">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Categoria</th>
+      <th>Autor</th>
+      <th>Criado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Test<td>
+      <td>Test</td>
+      <td>Test</td>
+      <td>Test</td>
+      <td><a class="dropdown-trigger" href="#!" data-target="dropdown-test"><i class="material-icons">more_vert</i></a></td>
+      <ul id="dropdown-test" class="dropdown-content">
+        <li><a href="{{ '/admin/news/show/' . $new->id }}"><i class="material-icons">open_in_new</i>Visualizar</a></li>
+        <li><a href="{{ '/admin/news/edit/' . $new->id }}"><i class="material-icons">mode_edit</i>Editar</a></li>
+        <li><a href="#!" class="red-text"><i class="material-icons">delete</i>Excluir</a></li>
+      </ul>
+    </tr>
+  </tbody>
+</table>
+
+  <br><br><br><br>
+  <br><br><br><br>
+  <br><br><br><br>
+
+
+<div class="container test">
+      <div class="row">
+        <div class="col s12">
+          <a href="#!" class="btn tooltipped" data-tooltip="this works!">This is a link!</a>
+        </div>
+      </div>
+    </div>
+
+ <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red tooltipped" data-position="left"  data-tooltip="I am a tooltip"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+
+<div style="background: #444;">
+  <div style="width: 200px; height: 200px; padding: 50px;">
+    <a class='dropdown-trigger btn' href='#' data-target='dropdown2'>Drop Me!</a> <!-- Dropdown Structure -->
+    <ul id='dropdown2' class='dropdown-content'>
+      <li><a href="#!">one</a></li>
+      <li><a href="#!">two</a></li>
+      <li class="divider"></li>
+      <li><a href="#!">three</a></li>
+      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+    </ul>
+  </div>
+</div>
 
 <div class="row">
   <div class="input-field col s12">
@@ -63,6 +131,10 @@
     <label>Materialize Select</label>
   </div>
 
+  <div class="chips">
+    <input class="custom-class">
+  </div>
+
 
   <br><br><br><br>
   <br><br><br><br>
@@ -74,17 +146,32 @@
   <br><br><br><br>
   <br><br><br><br>
 
-  <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
   <script src="bin/materialize.js"></script>
-  <!-- <script src="js/init.js"></script> -->
+  <script src="js/init.js"></script>
 <script src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>
   <script>
 (function($){
   $(document).ready(function(){
 
 
-    Materialize.Select.init($('select'));
+
+
+    var elem = document.querySelector('.chips');
+    var instance = new M.Chips(elem, {
+      data: [{
+        tag: 'Apple',
+      }, {
+        tag: 'Microsoft',
+      }, {
+        tag: 'Google',
+      }],
+    });
+
+
+    var elem = document.querySelector('.tooltipped');
+    var instance = new M.Tooltip(elem, {position: 'bottom'});
 
   }); // end of document ready
 })(cash); // end of jQuery name space

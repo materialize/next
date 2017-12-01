@@ -33,6 +33,25 @@ M.keys = {
   ARROW_DOWN: 40
 };
 
+
+/**
+ * TabPress Keydown handler
+ */
+M.tabPressed = false;
+let docHandleKeydown = function(e) {
+  if (e.which === M.keys.TAB) {
+    M.tabPressed = true;
+  }
+};
+let docHandleKeyup = function(e) {
+  if (e.which === M.keys.TAB) {
+    M.tabPressed = false;
+  }
+};
+document.addEventListener('keydown', docHandleKeydown);
+document.addEventListener('keyup', docHandleKeyup);
+
+
 /**
  * Initialize jQuery wrapper for plugin
  * @param {Class} plugin  javascript class
@@ -358,19 +377,3 @@ M.throttle = function(func, wait, options) {
     return result;
   };
 };
-
-
-// Velocity has conflicts when loaded with jQuery, this will check for it
-// First, check if in noConflict mode
-let Vel;
-if (M.jQueryLoaded) {
-  Vel = jQuery.Velocity;
-} else {
-  Vel = Velocity;
-}
-
-if (Vel) {
-  M.Vel = Vel;
-} else {
-  M.Vel = Velocity;
-}

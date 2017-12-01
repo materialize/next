@@ -1,4 +1,4 @@
-(function($, Vel) {
+(function($) {
   'use strict';
 
   let _defaults = {
@@ -354,8 +354,10 @@
     }
 
     _updateAmPmView() {
-      this.$amBtn.toggleClass('text-primary', this.amOrPm === 'AM');
-      this.$pmBtn.toggleClass('text-primary', this.amOrPm === 'PM');
+      if (this.options.twelveHour) {
+        this.$amBtn.toggleClass('text-primary', this.amOrPm === 'AM');
+        this.$pmBtn.toggleClass('text-primary', this.amOrPm === 'PM');
+      }
     }
 
     _updateTimeFromInput() {
@@ -599,4 +601,4 @@
     M.initializeJqueryWrapper(Timepicker, 'timepicker', 'M_Timepicker');
   }
 
-})(cash, M.Vel);
+})(cash);
