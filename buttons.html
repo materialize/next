@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -154,101 +155,12 @@
         <h3 class="header">Floating</h3>
         <a class="btn-floating waves-effect waves-light btn-large red"><i class="material-icons">add</i></a><br><br>
         <pre><code class="language-markup col s12">
-  &lt;a class="btn-floating btn-large waves-effect waves-light red">&lt;i class="material-icons">add</i>&lt;/i>&lt;/a>
+  &lt;a class="btn-floating btn-large waves-effect waves-light red">&lt;i class="material-icons">add&lt;/i>&lt;/a>
         </code></pre>
         <br>
 
-        <h5>Fixed Action Button</h5>
-        <p>If you want a fixed floating action button, you can add multiple actions that will appear on hover. Our demo is in the bottom righthand corner of the page.</p>
-        <pre><code class="language-markup col s12">
-  &lt;div class="fixed-action-btn">
-    &lt;a class="btn-floating btn-large red">
-      &lt;i class="large material-icons">mode_edit&lt;/i>
-    &lt;/a>
-    &lt;ul>
-      &lt;li>&lt;a class="btn-floating red">&lt;i class="material-icons">insert_chart&lt;/i>&lt;/a>&lt;/li>
-      &lt;li>&lt;a class="btn-floating yellow darken-1">&lt;i class="material-icons">format_quote&lt;/i>&lt;/a>&lt;/li>
-      &lt;li>&lt;a class="btn-floating green">&lt;i class="material-icons">publish&lt;/i>&lt;/a>&lt;/li>
-      &lt;li>&lt;a class="btn-floating blue">&lt;i class="material-icons">attach_file&lt;/i>&lt;/a>&lt;/li>
-    &lt;/ul>
-  &lt;/div>
-        </code></pre>
-
-        <p>Javascript plugin initialization</p>
-          <pre><code class="language-javascript">
-  $('.fixed-action-btn').floatingActionButton({
-    direction: 'top', // Direction menu comes out
-    hoverEnabled: true, // Hover enabled
-    toolbarEnabled: false // Toolbar transition enabled
-  });
-        </code></pre>
-        <br>
-        <h5>Horizontal FAB</h5>
-        <p>Creating a horizontal FAB is easy! Just set the direction parameter.</p>
-        <div style="position: relative; height: 70px;">
-          <div class="fixed-action-btn horizontal" style="position: absolute; display: inline-block; right: 24px;">
-            <a class="btn-floating btn-large red">
-              <i class="large material-icons">mode_edit</i>
-            </a>
-            <ul>
-              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-            </ul>
-          </div>
-        </div>
-        <pre><code class="language-javascript">
-  $('.fixed-action-btn').floatingActionButton({
-    direction: 'left'
-  });
-        </code></pre>
-
-        <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-          <a class="btn-floating btn-large red">
-            <i class="material-icons">mode_edit</i>
-          </a>
-          <ul>
-            <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-            <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-            <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-            <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-          </ul>
-        </div>
-        <br>
-
-        <h5>Click-only FAB</h5>
-        <p>If you want to disable the hover behaviour, and instead toggle the FAB menu when the user clicks on the large button (works great on mobile!), just add the <code class="language-markup">click-to-toggle</code> class to the FAB.</p>
-        <div style="position: relative; height: 70px;">
-          <div class="fixed-action-btn click-to-toggle" style="position: absolute; right: 24px;">
-            <a class="btn-floating btn-large red">
-              <i class="material-icons">menu</i>
-            </a>
-            <ul>
-              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-            </ul>
-          </div>
-        </div>
-        <pre><code class="language-javascript">
-  $('.fixed-action-btn').floatingActionButton({
-    direction: 'left',
-    hoverEnabled: false
-  });
-        </code></pre>
-        <br>
-
-        <h5>FAB to Toolbar</h5>
-        <p>Instead of displaying individual button options, you can transition your FAB into a toolbar on click. Just add the <code class="language-markup">toolbar</code> class to the FAB.</p>
-        <iframe src="fab-toolbar-demo.html" frameborder="0" width="100%" height="100px"></iframe>
-        <pre><code class="language-javascript">
-  $('.fixed-action-btn').floatingActionButton({
-    toolbarEnabled: true
-  });
-        </code></pre>
-
+        <h5>Floating Action Button</h5>
+        <p>See the documentation on <a href="/floating-action-button.html">this page</a></p>
       </div>
       <div id="flat" class="section scrollspy">
         <h3 class="header">Flat</h3>
@@ -264,7 +176,7 @@
         <button class="btn waves-effect waves-light" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
         <pre><code class="language-markup">
   &lt;button class="btn waves-effect waves-light" type="submit" name="action">Submit
-    &lt;i class="material-icons right">send</i>&lt;/i>
+    &lt;i class="material-icons right">send&lt;/i>
   &lt;/button>
         </code></pre>
       </div>
@@ -349,10 +261,20 @@
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

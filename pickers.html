@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -153,7 +154,7 @@
           <h5>Initialization</h5>
           <pre><code class="language-javascript">
   var elem = document.querySelector('.datepicker');
-  var instance = new M.Datepicker(elem, options);
+  var instance = M.Datepicker.init(elem, options);
 
   // Or with jQuery
 
@@ -180,14 +181,8 @@
               <tr>
                 <td>format</td>
                 <td>String</td>
-                <td>'YYYY-MM-DD'</td>
+                <td>'mmm dd, yyyy'</td>
                 <td>The date output format for the input field value.</td>
-              </tr>
-              <tr>
-                <td>toString</td>
-                <td>Function</td>
-                <td>null</td>
-                <td>The toString function which gets passed a current date object and format and returns a string.</td>
               </tr>
               <tr>
                 <td>parse</td>
@@ -223,7 +218,7 @@
                 <td>firstDay</td>
                 <td>Number</td>
                 <td>0</td>
-                <td>First day of week (0: Sunday, 1: Monday).</td>
+                <td>First day of week (0: Sunday, 1: Monday etc).</td>
               </tr>
               <tr>
                 <td>minDate</td>
@@ -268,10 +263,34 @@
                 <td>Specify a selector for a DOM element to render the calendar in, by default it will be placed before the input.</td>
               </tr>
               <tr>
+                <td>events</td>
+                <td>Array</td>
+                <td>[]</td>
+                <td>An array of string returned by `Date.toDateString()`, indicating there are events in the specified days.</td>
+              </tr>
+              <tr>
                 <td>onSelect</td>
                 <td>Function</td>
                 <td>null</td>
                 <td>Callback function when date is selected, first parameter is the newly selected date.</td>
+              </tr>
+              <tr>
+                <td>onOpen</td>
+                <td>Function</td>
+                <td>null</td>
+                <td>Callback function when Datepicker is opened.</td>
+              </tr>
+              <tr>
+                <td>onClose</td>
+                <td>Function</td>
+                <td>null</td>
+                <td>Callback function when Datepicker is closed.</td>
+              </tr>
+              <tr>
+                <td>onDraw</td>
+                <td>Function</td>
+                <td>null</td>
+                <td>Callback function when Datepicker HTML is refreshed.</td>
               </tr>
             </tbody>
           </table>
@@ -464,7 +483,7 @@ instance.destroy();
           <h5>Initialization</h5>
           <pre><code class="language-javascript">
   var elem = document.querySelector('.timepicker');
-  var instance = new M.Timepicker(elem, options);
+  var instance = M.Timepicker.init(elem, options);
 
   // Or with jQuery
 
@@ -527,7 +546,7 @@ instance.destroy();
               <tr>
                 <td>cancelText</td>
                 <td>String</td>
-                <td>'Ok'</td>
+                <td>'Cancel'</td>
                 <td>Cancel button text.</td>
               </tr>
               <tr>
@@ -697,10 +716,20 @@ instance.destroy();
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

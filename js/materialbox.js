@@ -4,13 +4,17 @@
   let _defaults = {
     inDuration: 275,
     outDuration: 200,
+    onOpenStart: null,
+    onOpenEnd: null,
+    onCloseStart: null,
+    onCloseEnd: null
   };
 
   /**
    * @class
    *
    */
-  class Materialbox {
+  class Materialbox extends Component {
     /**
      * Construct Materialbox instance
      * @constructor
@@ -19,13 +23,8 @@
      */
     constructor(el, options) {
 
-      // If exists, destroy and reinitialize
-      if (!!el.M_Materialbox) {
-        el.M_Materialbox.destroy();
-      }
+      super(Materialbox, el, options);
 
-      this.el = el;
-      this.$el = $(el);
       this.el.M_Materialbox = this;
 
       /**
@@ -33,6 +32,10 @@
        * @member Materialbox#options
        * @prop {Number} [inDuration=275] - Length in ms of enter transition
        * @prop {Number} [outDuration=200] - Length in ms of exit transition
+       * @prop {Function} onOpenStart - Callback function called before materialbox is opened
+       * @prop {Function} onOpenEnd - Callback function called after materialbox is opened
+       * @prop {Function} onCloseStart - Callback function called before materialbox is closed
+       * @prop {Function} onCloseEnd - Callback function called after materialbox is closed
        */
       this.options = $.extend({}, Materialbox.defaults, options);
 
@@ -55,12 +58,8 @@
       return _defaults;
     }
 
-    static init($els, options) {
-      let arr = [];
-      $els.each(function() {
-        arr.push(new Materialbox(this, options));
-      });
-      return arr;
+    static init(els, options) {
+      return super.init(this, els, options);
     }
 
     /**
@@ -174,6 +173,11 @@
         easing: 'easeOutQuad',
         complete: () => {
           this.doneAnimating = true;
+
+          // onOpenEnd callback
+          if (typeof(this.options.onOpenEnd) === 'function') {
+            this.options.onOpenEnd.call(this, this.el);
+          }
         }
       };
 
@@ -220,6 +224,11 @@
           if (this.ancestorsChanged.length) {
             this.ancestorsChanged.css('overflow', '');
           }
+
+          // onCloseEnd callback
+          if (typeof(this.options.onCloseEnd) === 'function') {
+            this.options.onCloseEnd.call(this, this.el);
+          }
         }
       };
 
@@ -247,6 +256,11 @@
       this.doneAnimating = false;
       this.$el.addClass('active');
       this.overlayActive = true;
+
+      // onOpenStart callback
+      if (typeof(this.options.onOpenStart) === 'function') {
+        this.options.onOpenStart.call(this, this.el);
+      }
 
       // Set positioning for placeholder
       this.placeholder.css({
@@ -356,6 +370,11 @@
       this._updateVars();
       this.doneAnimating = false;
 
+      // onCloseStart callback
+      if (typeof(this.options.onCloseStart) === 'function') {
+        this.options.onCloseStart.call(this, this.el);
+      }
+
       anim.remove(this.el);
       anim.remove(this.$overlay[0]);
 
@@ -402,4 +421,4 @@
     M.initializeJqueryWrapper(Materialbox, 'materialbox', 'M_Materialbox');
   }
 
-}(cash, anime));
+}(cash, M.anime));

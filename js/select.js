@@ -10,7 +10,7 @@
    * @class
    *
    */
-  class Select {
+  class Select extends Component {
     /**
      * Construct Select instance
      * @constructor
@@ -18,14 +18,8 @@
      * @param {Object} options
      */
     constructor(el, options) {
+      super(Select, el, options);
 
-      // If exists, destroy and reinitialize
-      if (!!el.M_Select) {
-        el.M_Select.destroy();
-      }
-
-      this.el = el;
-      this.$el = $(el);
       this.el.M_Select = this;
 
       /**
@@ -48,14 +42,8 @@
       return _defaults;
     }
 
-    static init($els, options) {
-      let arr = [];
-      $els.each(function() {
-        if (!$(this).hasClass('browser-default')) {
-          arr.push(new Select(this, options));
-        }
-      });
-      return arr;
+    static init(els, options) {
+      return super.init(this, els, options);
     }
 
     /**
@@ -122,6 +110,14 @@
         let selected = true;
 
         if (this.isMultiple) {
+          // Deselect placeholder option if still selected.
+          let placeholderOption = $(this.dropdownOptions).find('li.disabled.selected');
+          if (placeholderOption.length) {
+            placeholderOption.removeClass('selected');
+            placeholderOption.find('input[type="checkbox"]').prop('checked', false);
+            this._toggleEntryFromArray(placeholderOption[0].id);
+          }
+
           let checkbox = $(option).find('input[type="checkbox"]');
           checkbox.prop('checked', !checkbox.prop('checked'));
           selected = this._toggleEntryFromArray(key);
@@ -155,7 +151,6 @@
      */
     _setupDropdown() {
       this.wrapper = document.createElement('div');
-      this.wrapper.classList.add();
       $(this.wrapper).addClass('select-wrapper' + ' ' + this.options.classes);
       this.$el.before($(this.wrapper));
       this.wrapper.appendChild(this.el);
@@ -223,7 +218,7 @@
         if (this.isMultiple) {
           dropdownOptions.closeOnClick = false;
         }
-        this.dropdown = new M.Dropdown(this.input, dropdownOptions);
+        this.dropdown = M.Dropdown.init(this.input, dropdownOptions);
       }
 
       // Add initial selections
@@ -387,4 +382,4 @@
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Select, 'select', 'M_Select');
   }
-}( cash ));
+}(cash));

@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -173,7 +174,7 @@
           <h3 class="header">Initialization</h3>
           <pre><code class="language-javascript">
   var elem = document.querySelector('.tap-target');
-  var instance = new M.FeatureDiscovery(elem, options);
+  var instance = M.FeatureDiscovery.init(elem, options);
 
   // Or with jQuery
 
@@ -184,6 +185,35 @@
           <br>
         </div>
 
+
+        <div id="options" class="scrollspy section">
+          <h3 class="header">Options</h3>
+          <table class="striped">
+            <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>onOpen</td>
+                <td>Function</td>
+                <td>null</td>
+                <td>Callback function called when feature discovery is opened.</td>
+              </tr>
+              <tr>
+                <td>onClose</td>
+                <td>Function</td>
+                <td>null</td>
+                <td>Callback function called when feature discovery is closed.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
 
         <div id="methods" class="scrollspy section">
@@ -274,6 +304,7 @@
       <div style="height: 1px;">
         <ul class="section table-of-contents">
           <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#options">Options</a></li>
           <li><a href="#initialization">Initialization</a></li>
           <li><a href="#methods">Methods</a></li>
           <li><a href="#properties">Properties</a></li>
@@ -315,10 +346,20 @@
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

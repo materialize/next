@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -237,7 +238,7 @@
           <p>To open a modal using a trigger:</p>
           <pre><code class="language-javascript">
   var elem = document.querySelector('.modal');
-  var instance = new M.Modal(elem, options);
+  var instance = M.Modal.init(elem, options);
 
   // Or with jQuery
 
@@ -280,16 +281,28 @@
               <td>Transition out duration in milliseconds.</td>
             </tr>
             <tr>
-              <td>ready</td>
+              <td>onOpenStart</td>
               <td>Function</td>
               <td>null</td>
-              <td>Callback function called when modal is finished entering.</td>
+              <td>Callback function called before modal is opened.</td>
             </tr>
             <tr>
-              <td>complete</td>
+              <td>onOpenEnd</td>
               <td>Function</td>
               <td>null</td>
-              <td>Callback function called when modal is finished exiting.</td>
+              <td>Callback function called after modal is opened.</td>
+            </tr>
+            <tr>
+              <td>onCloseStart</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called before modal is closed.</td>
+            </tr>
+            <tr>
+              <td>onCloseEnd</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called after modal is closed.</td>
             </tr>
             <tr>
               <td>dismissible</td>
@@ -492,10 +505,20 @@ instance.destroy();
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

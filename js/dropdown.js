@@ -19,16 +19,10 @@
   /**
    * @class
    */
-  class Dropdown {
+  class Dropdown extends Component {
     constructor(el, options) {
+      super(Dropdown, el, options);
 
-      // If exists, destroy and reinitialize
-      if (!!el.M_Dropdown) {
-        el.M_Dropdown.destroy();
-      }
-
-      this.el = el;
-      this.$el = $(el);
       this.el.M_Dropdown = this;
       Dropdown._dropdowns.push(this);
 
@@ -71,12 +65,8 @@
       return _defaults;
     }
 
-    static init($els, options) {
-      let arr = [];
-      $els.each(function() {
-        arr.push(new Dropdown(this, options));
-      });
-      return arr;
+    static init(els, options) {
+      return super.init(this, els, options);
     }
 
     /**
@@ -486,4 +476,4 @@
     M.initializeJqueryWrapper(Dropdown, 'dropdown', 'M_Dropdown');
   }
 
-})(cash, anime);
+})(cash, M.anime);

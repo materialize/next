@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -179,13 +180,13 @@
             <tr>
               <td>inDuration</td>
               <td>Number</td>
-              <td>250</td>
+              <td>300</td>
               <td>Transition in duration in milliseconds.</td>
             </tr>
             <tr>
               <td>outDuration</td>
               <td>Number</td>
-              <td>250</td>
+              <td>375</td>
               <td>Transition out duration in milliseconds.</td>
             </tr>
             <tr>
@@ -227,7 +228,7 @@
             <tr>
               <td>el</td>
               <td>Element</td>
-              <td>The toast element..</td>
+              <td>The toast element.</td>
             </tr>
             <tr>
               <td>options</td>
@@ -237,7 +238,7 @@
             <tr>
               <td>panning</td>
               <td>Boolean</td>
-              <td>Describes the current pan state of the Toast..</td>
+              <td>Describes the current pan state of the Toast.</td>
             </tr>
             <tr>
               <td>timeRemaining</td>
@@ -289,7 +290,7 @@
 
         <pre><code class="language-javascript">
   // Get toast DOM Element, get instance, then call dismiss function
-  var toastElement = $('.toast').first()[0];
+  var toastElement = document.querySelector('.toast');
   var toastInstance = M.Toast.getInstance(toastElement);
   toastInstance.dismiss();
         </code></pre>
@@ -357,10 +358,20 @@
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

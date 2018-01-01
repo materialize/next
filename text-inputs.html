@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -390,7 +391,7 @@
         <p>advanced note: When dynamically changing the value of a textarea with methods like jQuery's <code class="language-markup">.val()</code>, you must trigger an autoresize on it afterwords because .val() does not automatically trigger the events we've binded to the textarea. </p>
         <pre><code class="language-javascript">
   $('#textarea1').val('New Text');
-  $('#textarea1').trigger('autoresize');
+  M.textareaAutoResize($('#textarea1'));
         </code></pre>
         <br>
 
@@ -494,8 +495,8 @@
             <br/>
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea" data-length="120"></textarea>
-                <label for="textarea1">Textarea</label>
+                <textarea id="textarea2" class="materialize-textarea" data-length="120"></textarea>
+                <label for="textarea2">Textarea</label>
               </div>
             </div>
           </form>
@@ -511,8 +512,8 @@
         &lt;/div>
         &lt;div class="row">
           &lt;div class="input-field col s12">
-            &lt;textarea id="textarea1" class="materialize-textarea" data-length="120">&lt;/textarea>
-            &lt;label for="textarea1">Textarea&lt;/label>
+            &lt;textarea id="textarea2" class="materialize-textarea" data-length="120">&lt;/textarea>
+            &lt;label for="textarea2">Textarea&lt;/label>
           &lt;/div>
         &lt;/div>
       &lt;/form>
@@ -524,7 +525,7 @@
         <p>There are no options for this plugin, but if you are adding these dynamically, you can use this to initialize them.</p>
         <pre><code class="language-javascript">
   $(document).ready(function() {
-    $('input#input_text, textarea#textarea1').characterCounter();
+    $('input#input_text, textarea#textarea2').characterCounter();
   });
         </code></pre>
       </div>
@@ -580,10 +581,20 @@
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>

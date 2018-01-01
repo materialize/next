@@ -12,7 +12,7 @@
    * @class
    *
    */
-  class Tabs {
+  class Tabs extends Component {
     /**
      * Construct Tabs instance
      * @constructor
@@ -20,18 +20,9 @@
      * @param {Object} options
      */
     constructor(el, options) {
-      // If exists, destroy and reinitialize
-      if (!!el.M_Tabs) {
-        el.M_Tabs.destroy();
-      }
+      super(Tabs, el, options);
 
-      /**
-       * The jQuery element
-       * @type {jQuery}
-       */
-      this.$el = $(el);
-
-      this.el = el;
+      this.el.M_Tabs = this;
 
       /**
        * Options for the Tabs
@@ -42,8 +33,6 @@
        * @prop {Number} responsiveThreshold
        */
       this.options = $.extend({}, Tabs.defaults, options);
-
-      this.el.M_Tabs = this;
 
       // Setup
       this.$tabLinks = this.$el.children('li.tab').children('a');
@@ -67,12 +56,8 @@
       return _defaults;
     }
 
-    static init($els, options) {
-      let arr = [];
-      $els.each(function() {
-        arr.push(new Tabs(this, options));
-      });
-      return arr;
+    static init(els, options) {
+      return super.init(this, els, options);
     }
 
     /**
@@ -265,7 +250,7 @@
       $tabsWrapper.append($tabsContent);
       $tabsContent[0].style.display = '';
 
-      this._tabsCarousel = new M.Carousel($tabsWrapper[0], {
+      this._tabsCarousel = M.Carousel.init($tabsWrapper[0], {
         fullWidth: true,
         noWrap: true,
         onCycleTo: (item) => {
@@ -391,7 +376,7 @@
      */
     select(tabId) {
       let tab = this.$tabLinks.filter('[href="#' + tabId + '"]');
-      if (tab.length) {4
+      if (tab.length) {
         tab.trigger('click');
       }
     }
@@ -404,4 +389,4 @@
     M.initializeJqueryWrapper(Tabs, 'tabs', 'M_Tabs');
   }
 
-})(cash, anime);
+})(cash, M.anime);

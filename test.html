@@ -29,30 +29,14 @@
 </head>
 <body>
 
-<table class="bordered highlight responsive-table">
-  <thead>
-    <tr>
-      <th>Título</th>
-      <th>Categoria</th>
-      <th>Autor</th>
-      <th>Criado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Test<td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td><a class="dropdown-trigger" href="#!" data-target="dropdown-test"><i class="material-icons">more_vert</i></a></td>
-      <ul id="dropdown-test" class="dropdown-content">
-        <li><a href="{{ '/admin/news/show/' . $new->id }}"><i class="material-icons">open_in_new</i>Visualizar</a></li>
-        <li><a href="{{ '/admin/news/edit/' . $new->id }}"><i class="material-icons">mode_edit</i>Editar</a></li>
-        <li><a href="#!" class="red-text"><i class="material-icons">delete</i>Excluir</a></li>
-      </ul>
-    </tr>
-  </tbody>
-</table>
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <textarea id="textarea1" class="materialize-textarea">This is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the text </textarea>
+          <label for="textarea1">Textarea</label>
+        </div>
+      </div>
+    </form>
 
   <br><br><br><br>
   <br><br><br><br>
@@ -155,8 +139,13 @@
 (function($){
   $(document).ready(function(){
 
+    // jQuery(document).on('autoresize', '.materialize-textarea', function () {
+    //   M.textareaAutoResize(jQuery(this));
+    // });
 
-
+    M.textareaAutoResize($('#textarea1'));
+    // var event = new CustomEvent('autoresize', {bubbles: true, cancelable: true});
+    // jQuery('#textarea1')[0].dispatchEvent(event);
 
     var elem = document.querySelector('.chips');
     var instance = new M.Chips(elem, {

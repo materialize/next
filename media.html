@@ -81,6 +81,7 @@
                   <li><a href="breadcrumbs.html">Breadcrumbs</a></li>
                   <li><a href="cards.html">Cards</a></li>
                   <li><a href="collections.html">Collections</a></li>
+                  <li><a href="floating-action-button.html">Floating Action Button</a></li>
                   <li><a href="footer.html">Footer</a></li>
                   <li><a href="icons.html">Icons</a></li>
                   <li><a href="navbar.html">Navbar</a></li>
@@ -152,7 +153,7 @@
        <p>Materialbox is intialized automatically. However, if you add images dynamically, you will have to add this initialization code.</p>
        <pre><code class="language-javascript">
   var elem = document.querySelector('.materialboxed');
-  var instance = new M.Materialbox(elem, options);
+  var instance = M.Materialbox.init(elem, options);
 
   // Or with jQuery
 
@@ -185,6 +186,30 @@
               <td>Number</td>
               <td>200</td>
               <td>Transition out duration in milliseconds.</td>
+            </tr>
+            <tr>
+              <td>onOpenStart</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called before materialbox is opened.</td>
+            </tr>
+            <tr>
+              <td>onOpenEnd</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called after materialbox is opened.</td>
+            </tr>
+            <tr>
+              <td>onCloseStart</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called before materialbox is closed.</td>
+            </tr>
+            <tr>
+              <td>onCloseEnd</td>
+              <td>Function</td>
+              <td>null</td>
+              <td>Callback function called after materialbox is closed.</td>
             </tr>
           </tbody>
         </table>
@@ -371,7 +396,7 @@
       <h4>Initialization</h4>
        <pre><code class="language-javascript">
   var elem = document.querySelector('.slider');
-  var instance = new M.Slider(elem, options);
+  var instance = M.Slider.init(elem, options);
 
   // Or with jQuery
 
@@ -570,10 +595,20 @@
               <div class="col s12">
                 <h5>Patreon Sponsors</h5>
               </div>
-              <div class="col l3 s12">
+              <div class="col s12">
                 <div class="patreon-footer-ad">
                   <a href="http://lucidocean.com" target="_blank">
                     <img src="https://s8.postimg.org/762csselh/logo_full_size.png" alt="Lucid Ocean">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.stillio.com/" target="_blank">
+                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad white-ad">
+                  <a href="https://gaggle.email/" target="_blank">
+                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
                   </a>
                 </div>
               </div>
