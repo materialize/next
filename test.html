@@ -1,170 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Parallax Template - Materialize</title>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
-  <!-- CSS  -->
-  <link href="bin/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="extras/noUiSlider/nouislider.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Materialize - Documentation</title>
 
-  <style>
-    header,main,footer {
-    padding-left:300px;
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" href="images/favicon/apple-touch-icon-152x152.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+    <link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">
 
-}
-.container.test {
-  margin-top: 50px;
-}
+    <!-- Android 5 Chrome Color -->
+    <meta name="theme-color" content="#EE6E73">
 
-@media only screen and (max-width:992px){
-    header,main,footer {
-        padding-left:0;
-    }
-}
-
-  </style>
-</head>
-<body>
-
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <textarea id="textarea1" class="materialize-textarea">This is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the textThis is the text </textarea>
-          <label for="textarea1">Textarea</label>
-        </div>
-      </div>
-    </form>
-
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
+    <link href="bin/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  </head>
+  <body>
 
 
-<div class="container test">
+
+<section id="hero">
+  <div class="parallax-container center valign-wrapper">
+    <div class="container">
       <div class="row">
         <div class="col s12">
-          <a href="#!" class="btn tooltipped" data-tooltip="this works!">This is a link!</a>
+          <h1>Parallax Demo</h1>
         </div>
       </div>
     </div>
-
- <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red tooltipped" data-position="left"  data-tooltip="I am a tooltip"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
+    <div class="parallax"><img src="https://source.unsplash.com/wpMQWrjwPLs/1920x1280" alt="Photo by Alberto Restifo"/></div>
   </div>
-
-<div style="background: #444;">
-  <div style="width: 200px; height: 200px; padding: 50px;">
-    <a class='dropdown-trigger btn' href='#' data-target='dropdown2'>Drop Me!</a> <!-- Dropdown Structure -->
-    <ul id='dropdown2' class='dropdown-content'>
-      <li><a href="#!">one</a></li>
-      <li><a href="#!">two</a></li>
-      <li class="divider"></li>
-      <li><a href="#!">three</a></li>
-      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
-    </ul>
+</section>
+<section id="something">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 center">
+        <h2>Something</h2>
+        <p>lorem ipsum</p>
+      </div>
+    </div>
   </div>
-</div>
-
-<div class="row">
-  <div class="input-field col s12">
-    <input type="hidden" value="lol">
+</section>
+<section id="last">
+  <div class="parallax-container center valign-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <h1>End of the Page</h1>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="https://source.unsplash.com/g30P1zcOzXo/1920x1280" alt="Photo by Daniel Leone"/></div>
   </div>
-</div>
-<div class="row">
-  <div class="input-field col s12">
-    <!-- Leaving out the .validate class here -->
-    <input id="email" class="invalid" type="email">
-    <label for="email" >Email</label>
-    <span class="helper-text" data-success="long success that results in various lines" class="active" data-error="long error that results in various lines"></span>
-  </div>
-</div>
-
-  <div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
-
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-
-  <div class="input-field col s12">
-    <select>
-      <option value="" disabled selected>Choose your option</option>
-      <option value="1">Option 1</option>
-      <option value="2">Option 2</option>
-      <option value="3">Option 3</option>
-    </select>
-    <label>Materialize Select</label>
-  </div>
-
-  <div class="chips">
-    <input class="custom-class">
-  </div>
+</section>
 
 
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
-  <br><br><br><br>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
-  <script src="bin/materialize.js"></script>
-  <script src="js/init.js"></script>
-<script src="http://materializecss.com/extras/noUiSlider/nouislider.js"></script>
-  <script>
-(function($){
-  $(document).ready(function(){
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="bin/materialize.js"></script>
 
-    // jQuery(document).on('autoresize', '.materialize-textarea', function () {
-    //   M.textareaAutoResize(jQuery(this));
-    // });
+    <script>
+     $(document).ready(function(){
+ var elem = document.querySelector('.parallax');
+  var instance = M.Parallax.init(elem);
+     });
 
-    M.textareaAutoResize($('#textarea1'));
-    // var event = new CustomEvent('autoresize', {bubbles: true, cancelable: true});
-    // jQuery('#textarea1')[0].dispatchEvent(event);
-
-    var elem = document.querySelector('.chips');
-    var instance = new M.Chips(elem, {
-      data: [{
-        tag: 'Apple',
-      }, {
-        tag: 'Microsoft',
-      }, {
-        tag: 'Google',
-      }],
-    });
-
-
-    var elem = document.querySelector('.tooltipped');
-    var instance = new M.Tooltip(elem, {position: 'bottom'});
-
-  }); // end of document ready
-})(cash); // end of jQuery name space
-  </script>
+    </script>
 
   </body>
 </html>

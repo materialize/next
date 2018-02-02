@@ -2,7 +2,8 @@
   'use strict';
 
   let _defaults = {
-    classes: ''
+    classes: '',
+    dropdownOptions: {}
   };
 
 
@@ -20,6 +21,11 @@
     constructor(el, options) {
       super(Select, el, options);
 
+      // Don't init if browser default version
+      if (this.$el.hasClass('browser-default')) {
+        return;
+      }
+
       this.el.M_Select = this;
 
       /**
@@ -31,6 +37,7 @@
       this.isMultiple = this.$el.prop('multiple');
 
       // Setup
+      this.el.tabIndex = -1;
       this._keysSelected = {};
       this._valueDict = {}; // Maps key to original and generated option element.
       this._setupDropdown();
@@ -87,7 +94,6 @@
       });
       this.el.removeEventListener('change', this._handleSelectChangeBound);
       this.input.removeEventListener('click', this._handleInputClickBound);
-      this.input.removeEventListener('focus', this._handleInputFocusBound);
     }
 
     /**
@@ -214,7 +220,8 @@
 
       // Initialize dropdown
       if (!this.el.disabled) {
-        let dropdownOptions = {};
+        let dropdownOptions = $.extend({}, this.options.dropdownOptions);
+
         if (this.isMultiple) {
           dropdownOptions.closeOnClick = false;
         }

@@ -43,6 +43,11 @@ describe("Select Plugin", function () {
       var firstOption = browserSelect.find('option[selected]');
       expect(normalInput.val()).toEqual(firstOption.text(), 'Value should be equal to preselected option.');
     });
+
+    it("should not initialize if browser default", function () {
+      browserDefault = $('select.browser-default');
+      expect(browserDefault.parent().hasClass('select-wrapper')).toEqual(false, 'Wrapper should not be made');
+    });
   });
 
   describe("Multiple Select", function () {
@@ -142,12 +147,12 @@ describe("Select Plugin", function () {
       expect(optInput).toBeVisible('Should be hidden before dropdown is opened.');
       expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.');
 
-      optInput.click();
+      click(optInput[0]);
 
       setTimeout(function() {
         expect(optDropdown).toBeVisible('Should be visible after opening.');
         var secondOption = optDropdown.find('li:not(.disabled):not(.optgroup)').eq(1);
-        secondOption.click();
+        click(secondOption[0]);
         optInput.blur();
 
         setTimeout(function() {
@@ -181,12 +186,12 @@ describe("Select Plugin", function () {
       expect(optInput).toBeVisible('Should be hidden before dropdown is opened.');
       expect(optDropdown).toBeHidden('Should be hidden before dropdown is opened.');
 
-      optInput.click();
+      click(optInput[0]);
 
       setTimeout(function() {
         expect(optDropdown).toBeVisible('Should be visible after opening.');
         var optgroup = optDropdown.find('li.optgroup').first();
-        optgroup.click();
+        click(optgroup[0]);
         optInput.blur();
 
         setTimeout(function() {

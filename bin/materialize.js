@@ -1038,7 +1038,7 @@ var Component = function () {
       var instances = null;
       if (els instanceof Element) {
         instances = new classDef(els, options);
-      } else if (!!els.jquery || els instanceof NodeList) {
+      } else if (!!els && (els.jquery || els.cash || els instanceof NodeList)) {
         var instancesArr = [];
         for (var i = 0; i < els.length; i++) {
           instancesArr.push(new classDef(els[i], options));
@@ -1167,7 +1167,7 @@ M.guid = function () {
  * @returns {string}
  */
 M.escapeHash = function (hash) {
-  return hash.replace(/(:|\.|\[|\]|,|=)/g, "\\$1");
+  return hash.replace(/(:|\.|\[|\]|,|=|\/)/g, "\\$1");
 };
 
 M.elementOrParentIsFixed = function (element) {
@@ -1256,35 +1256,38 @@ M.checkPossibleAlignments = function (el, container, bounding, offset) {
 
   var containerAllowsOverflow = getComputedStyle(container).overflow === 'visible';
   var containerRect = container.getBoundingClientRect();
+  var containerHeight = Math.min(containerRect.height, window.innerHeight);
+  var containerWidth = Math.min(containerRect.width, window.innerWidth);
   var elOffsetRect = el.getBoundingClientRect();
 
   var scrollLeft = container.scrollLeft;
   var scrollTop = container.scrollTop;
 
   var scrolledX = bounding.left - scrollLeft;
-  var scrolledY = bounding.top - scrollTop;
+  var scrolledYTopEdge = bounding.top - scrollTop;
+  var scrolledYBottomEdge = bounding.top + elOffsetRect.height - scrollTop;
 
   // Check for container and viewport for left
-  canAlign.spaceOnRight = !containerAllowsOverflow ? container.offsetWidth - (scrolledX + bounding.width) : window.innerWidth - (elOffsetRect.left + bounding.width);
-  if (!containerAllowsOverflow && scrolledX + bounding.width > container.offsetWidth || containerAllowsOverflow && elOffsetRect.left + bounding.width > window.innerWidth) {
+  canAlign.spaceOnRight = !containerAllowsOverflow ? containerWidth - (scrolledX + bounding.width) : window.innerWidth - (elOffsetRect.left + bounding.width);
+  if (canAlign.spaceOnRight < 0) {
     canAlign.left = false;
   }
 
   // Check for container and viewport for Right
   canAlign.spaceOnLeft = !containerAllowsOverflow ? scrolledX - bounding.width + elOffsetRect.width : elOffsetRect.right - bounding.width;
-  if (!containerAllowsOverflow && scrolledX - bounding.width + elOffsetRect.width < 0 || containerAllowsOverflow && elOffsetRect.right - bounding.width < 0) {
+  if (canAlign.spaceOnLeft < 0) {
     canAlign.right = false;
   }
 
   // Check for container and viewport for Top
-  canAlign.spaceOnBottom = !containerAllowsOverflow ? containerRect.height - (scrolledY + bounding.height + offset) : window.innerHeight - (elOffsetRect.top + bounding.height + offset);
-  if (!containerAllowsOverflow && scrolledY + bounding.height + offset > containerRect.height || containerAllowsOverflow && elOffsetRect.top + bounding.height + offset > window.innerHeight) {
+  canAlign.spaceOnBottom = !containerAllowsOverflow ? containerHeight - (scrolledYTopEdge + bounding.height + offset) : window.innerHeight - (elOffsetRect.top + bounding.height + offset);
+  if (canAlign.spaceOnBottom < 0) {
     canAlign.top = false;
   }
 
   // Check for container and viewport for Bottom
-  canAlign.spaceOnTop = !containerAllowsOverflow ? scrolledY - (bounding.height + offset) : elOffsetRect.bottom - (bounding.height + offset);
-  if (!containerAllowsOverflow && scrolledY - bounding.height - offset < 0 || containerAllowsOverflow && elOffsetRect.bottom - bounding.height - offset < 0) {
+  canAlign.spaceOnTop = !containerAllowsOverflow ? scrolledYBottomEdge - (bounding.height - offset) : elOffsetRect.bottom - (bounding.height + offset);
+  if (canAlign.spaceOnTop < 0) {
     canAlign.bottom = false;
   }
 
@@ -2130,6 +2133,7 @@ $jscomp.polyfill = function (e, r, p, m) {
   var _defaults = {
     alignment: 'left',
     constrainWidth: true,
+    container: null,
     coverTrigger: true,
     closeOnClick: true,
     hover: false,
@@ -2163,10 +2167,18 @@ $jscomp.polyfill = function (e, r, p, m) {
       /**
        * Options for the dropdown
        * @member Dropdown#options
-       * @prop {Function} onOpenStart - Function called when sidenav starts entering
-       * @prop {Function} onOpenEnd - Function called when sidenav finishes entering
-       * @prop {Function} onCloseStart - Function called when sidenav starts exiting
-       * @prop {Function} onCloseEnd - Function called when sidenav finishes exiting
+       * @prop {String} [alignment='left'] - Edge which the dropdown is aligned to
+       * @prop {Boolean} [constrainWidth=true] - Constrain width to width of the button
+       * @prop {Element} container - Container element to attach dropdown to (optional)
+       * @prop {Boolean} [coverTrigger=true] - Place dropdown over trigger
+       * @prop {Boolean} [closeOnClick=true] - Close on click of dropdown item
+       * @prop {Boolean} [hover=false] - Open dropdown on hover
+       * @prop {Number} [inDuration=150] - Duration of open animation in ms
+       * @prop {Number} [outDuration=250] - Duration of close animation in ms
+       * @prop {Function} onOpenStart - Function called when dropdown starts opening
+       * @prop {Function} onOpenEnd - Function called when dropdown finishes opening
+       * @prop {Function} onCloseStart - Function called when dropdown starts closing
+       * @prop {Function} onCloseEnd - Function called when dropdown finishes closing
        */
       _this7.options = $.extend({}, Dropdown.defaults, options);
 
@@ -2180,7 +2192,11 @@ $jscomp.polyfill = function (e, r, p, m) {
       _this7.filterQuery = [];
 
       // Move dropdown-content after dropdown-trigger
-      _this7.$el.after(_this7.dropdownEl);
+      if (!!_this7.options.container) {
+        $(_this7.options.container).append(_this7.dropdownEl);
+      } else {
+        _this7.$el.after(_this7.dropdownEl);
+      }
 
       _this7._makeDropdownFocusable();
       _this7._resetFilterQueryBound = _this7._resetFilterQuery.bind(_this7);
@@ -2253,6 +2269,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _setupTemporaryEventHandlers() {
         // Use capture phase event handler to prevent click
         document.body.addEventListener('click', this._handleDocumentClickBound, true);
+        document.body.addEventListener('touchstart', this._handleDocumentClickBound);
         this.dropdownEl.addEventListener('keydown', this._handleDropdownKeydownBound);
       }
     }, {
@@ -2260,6 +2277,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       value: function _removeTemporaryEventHandlers() {
         // Use capture phase event handler to prevent click
         document.body.removeEventListener('click', this._handleDocumentClickBound, true);
+        document.body.removeEventListener('touchstart', this._handleDocumentClickBound);
         this.dropdownEl.removeEventListener('keydown', this._handleDropdownKeydownBound);
       }
     }, {
@@ -2300,11 +2318,7 @@ $jscomp.polyfill = function (e, r, p, m) {
           setTimeout(function () {
             _this8.close();
           }, 0);
-        } else if ($target.closest('.dropdown-trigger').length) {
-          setTimeout(function () {
-            _this8.close();
-          }, 0);
-        } else if (!$target.closest('.dropdown-content').length) {
+        } else if ($target.closest('.dropdown-trigger').length || !$target.closest('.dropdown-content').length) {
           setTimeout(function () {
             _this8.close();
           }, 0);
@@ -2417,15 +2431,13 @@ $jscomp.polyfill = function (e, r, p, m) {
       key: "_getDropdownPosition",
       value: function _getDropdownPosition() {
         var offsetParentBRect = this.el.offsetParent.getBoundingClientRect();
-        var triggerOffset = { left: this.el.offsetLeft, top: this.el.offsetTop, width: this.el.offsetWidth, height: this.el.offsetHeight };
-        var dropdownOffset = { left: this.dropdownEl.offsetLeft, top: this.dropdownEl.offsetTop, width: this.dropdownEl.offsetWidth, height: this.dropdownEl.offsetHeight };
         var triggerBRect = this.el.getBoundingClientRect();
         var dropdownBRect = this.dropdownEl.getBoundingClientRect();
 
         var idealHeight = dropdownBRect.height;
         var idealWidth = dropdownBRect.width;
-        var idealXPos = triggerOffset.left;
-        var idealYPos = triggerOffset.top;
+        var idealXPos = triggerBRect.left - dropdownBRect.left;
+        var idealYPos = triggerBRect.top - dropdownBRect.top;
 
         var dropdownBounds = {
           left: idealXPos,
@@ -2480,12 +2492,14 @@ $jscomp.polyfill = function (e, r, p, m) {
         if (horizontalAlignment === 'right') {
           idealXPos = idealXPos - dropdownBRect.width + triggerBRect.width;
         }
-        return { x: idealXPos,
+        return {
+          x: idealXPos,
           y: idealYPos,
           verticalAlignment: verticalAlignment,
           horizontalAlignment: horizontalAlignment,
           height: idealHeight,
-          width: idealWidth };
+          width: idealWidth
+        };
       }
 
       /**
@@ -2955,6 +2969,9 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         this.isOpen = true;
 
+        // Set opening trigger, undefined indicates modal was opened by javascript
+        this._openingTrigger = !!$trigger ? $trigger[0] : undefined;
+
         // onOpenStart callback
         if (typeof this.options.onOpenStart === 'function') {
           this.options.onOpenStart.call(this, this.el, this._openingTrigger);
@@ -2964,9 +2981,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         body.style.overflow = 'hidden';
         this.el.classList.add('open');
         this.el.insertAdjacentElement('afterend', this.$overlay[0]);
-
-        // Set opening trigger, undefined indicates modal was opened by javascript
-        this._openingTrigger = !!$trigger ? $trigger[0] : undefined;
 
         if (this.options.dismissible) {
           this._handleKeydownBound = this._handleKeydown.bind(this);
@@ -3144,8 +3158,8 @@ $jscomp.polyfill = function (e, r, p, m) {
        */
 
     }, {
-      key: "removeEventHandlers",
-      value: function removeEventHandlers() {
+      key: "_removeEventHandlers",
+      value: function _removeEventHandlers() {
         this.el.removeEventListener('click', this._handleMaterialboxClickBound);
       }
 
@@ -3257,8 +3271,8 @@ $jscomp.polyfill = function (e, r, p, m) {
           animOptions.maxWidth = this.newWidth;
           animOptions.width = [this.originalWidth, animOptions.width];
         } else {
-          animOptions.left = [animOptions.left, 0];
-          animOptions.top = [animOptions.top, 0];
+          animOptions.left = animOptions.left;
+          animOptions.top = animOptions.top;
         }
 
         anim(animOptions);
@@ -3389,10 +3403,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         anim.remove(this.el);
         anim.remove(this.$overlay[0]);
 
-        if (this.caption !== "") {
-          anim.remove(this.$photoCaption[0]);
-        }
-
         // Animate Overlay
         anim({
           targets: this.$overlay[0],
@@ -3403,6 +3413,9 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         // Add and animate caption if it exists
         if (this.caption !== "") {
+          if (this.$photocaption) {
+            anim.remove(this.$photoCaption[0]);
+          }
           this.$photoCaption = $('<div class="materialbox-caption"></div>');
           this.$photoCaption.text(this.caption);
           $('body').append(this.$photoCaption);
@@ -3555,9 +3568,14 @@ $jscomp.polyfill = function (e, r, p, m) {
        * @prop {Number} responsiveThreshold
        */
       _this19.options = $.extend({}, Parallax.defaults, options);
+      _this19._enabled = window.innerWidth > _this19.options.responsiveThreshold;
 
       _this19.$img = _this19.$el.find('img').first();
-      _this19._enabled = window.innerWidth > _this19.options.responsiveThreshold;
+      _this19.$img.each(function () {
+        var el = this;
+        if (el.complete) $(el).trigger("load");
+      });
+
       _this19._updateParallax();
       _this19._setupEventHandlers();
       _this19._setupStyles();
@@ -3613,10 +3631,6 @@ $jscomp.polyfill = function (e, r, p, m) {
       key: "_handleImageLoad",
       value: function _handleImageLoad() {
         this._updateParallax();
-        this.$img.each(function () {
-          var el = this;
-          if (el.complete) $(el).trigger("load");
-        });
       }
     }, {
       key: "_updateParallax",
@@ -5366,6 +5380,11 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_handleDragTargetDrag",
       value: function _handleDragTargetDrag(e) {
+        // Check if draggable
+        if (!this.options.draggable) {
+          return;
+        }
+
         // If not being dragged, set initial drag start variables
         if (!this.isDragged) {
           this._startDrag(e);
@@ -5413,6 +5432,11 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_handleDragTargetRelease",
       value: function _handleDragTargetRelease() {
+        // Check if draggable
+        if (!this.options.draggable) {
+          return;
+        }
+
         if (this.isDragged) {
           if (this.percentOpen > .5) {
             this.open();
@@ -6530,6 +6554,11 @@ $jscomp.polyfill = function (e, r, p, m) {
       $textarea = $($textarea);
     }
 
+    if (!$textarea.length) {
+      console.error("No textarea element found");
+      return;
+    }
+
     // Textarea Auto Resize
     var hiddenDiv = $('.hiddendiv').first();
     if (!hiddenDiv.length) {
@@ -6586,10 +6615,10 @@ $jscomp.polyfill = function (e, r, p, m) {
     // When textarea is hidden, width goes crazy.
     // Approximate with half of window size
 
-    if ($textarea.css('display') !== 'hidden') {
+    if ($textarea[0].offsetWidth > 0 && $textarea[0].offsetHeight > 0) {
       hiddenDiv.css('width', $textarea.width() + 'px');
     } else {
-      hiddenDiv.css('width', $(window).width() / 2 + 'px');
+      hiddenDiv.css('width', window.innerWidth / 2 + 'px');
     }
 
     /**
@@ -7458,7 +7487,7 @@ $jscomp.polyfill = function (e, r, p, m) {
           _this43.$input[0].focus();
         };
 
-        this.autocomplete = M.Autocomplete.init(this.$input, this.options.autocompleteOptions)[0];
+        this.autocomplete = M.Autocomplete.init(this.$input[0], this.options.autocompleteOptions);
       }
 
       /**
@@ -8202,7 +8231,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
         var backdrop = this.$el.find('.fab-backdrop');
-        var fabColor = anchor.css('background-color');
+        var fabColor = this.$anchor.css('background-color');
 
         this.offsetX = this.btnLeft - windowWidth / 2 + this.btnWidth / 2;
         this.offsetY = windowHeight - this.btnBottom;
@@ -8347,8 +8376,8 @@ $jscomp.polyfill = function (e, r, p, m) {
       nextMonth: '›',
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       weekdaysAbbrev: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
     },
 
@@ -8857,8 +8886,8 @@ $jscomp.polyfill = function (e, r, p, m) {
         // Init Materialize Select
         var yearSelect = this.calendarEl.querySelector('.pika-select-year');
         var monthSelect = this.calendarEl.querySelector('.pika-select-month');
-        M.Select.init(yearSelect, { classes: 'select-year' });
-        M.Select.init(monthSelect, { classes: 'select-month' });
+        M.Select.init(yearSelect, { classes: 'select-year', dropdownOptions: { container: document.body, constrainWidth: false } });
+        M.Select.init(monthSelect, { classes: 'select-month', dropdownOptions: { container: document.body, constrainWidth: false } });
 
         // Add change handlers for select
         yearSelect.addEventListener('change', this._handleYearChange.bind(this));
@@ -8911,8 +8940,12 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         this.formats = {
 
-          dd: function () {
+          d: function () {
             return _this53.date.getDate();
+          },
+          dd: function () {
+            var d = _this53.date.getDate();
+            return (d < 10 ? '0' : '') + d;
           },
           ddd: function () {
             return _this53.options.i18n.weekdaysShort[_this53.date.getDay()];
@@ -8920,17 +8953,21 @@ $jscomp.polyfill = function (e, r, p, m) {
           dddd: function () {
             return _this53.options.i18n.weekdays[_this53.date.getDay()];
           },
-          mm: function () {
+          m: function () {
             return _this53.date.getMonth() + 1;
+          },
+          mm: function () {
+            var m = _this53.date.getMonth() + 1;
+            return (m < 10 ? '0' : '') + m;
           },
           mmm: function () {
             return _this53.options.i18n.monthsShort[_this53.date.getMonth()];
           },
           mmmm: function () {
-            return _this53.options.i18n.monthsShort[_this53.date.getMonth()];
+            return _this53.options.i18n.months[_this53.date.getMonth()];
           },
           yy: function () {
-            return _this53.date.getFullYear().slice(2);
+            return ('' + _this53.date.getFullYear()).slice(2);
           },
           yyyy: function () {
             return _this53.date.getFullYear();
@@ -9208,9 +9245,14 @@ $jscomp.polyfill = function (e, r, p, m) {
     container: null,
     defaultTime: 'now', // default time, 'now' or '13:14' e.g.
     fromnow: 0, // Millisecond offset from the defaultTime
-    doneText: 'Ok', // done button text
-    clearText: 'Clear',
-    cancelText: 'Cancel',
+
+    // internationalization
+    i18n: {
+      done: 'Ok',
+      clear: 'Clear',
+      cancel: 'Cancel'
+    },
+
     autoClose: false, // auto close when minute is selected
     twelveHour: true, // change to 12 hour AM/PM clock from 24 hour
     vibrate: true // vibrate the device when dragging clock hand
@@ -9405,11 +9447,11 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_pickerSetup",
       value: function _pickerSetup() {
-        $('<button class="btn-flat timepicker-clear waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.clearText + '</button>').appendTo(this.footer).on('click', this.clear.bind(this));
+        $('<button class="btn-flat timepicker-clear waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.i18n.clear + '</button>').appendTo(this.footer).on('click', this.clear.bind(this));
 
         var confirmationBtnsContainer = $('<div class="confirmation-btns"></div>');
-        $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.cancelText + '</button>').appendTo(confirmationBtnsContainer).on('click', this.close.bind(this));
-        $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.doneText + '</button>').appendTo(confirmationBtnsContainer).on('click', this.done.bind(this));
+        $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.i18n.cancel + '</button>').appendTo(confirmationBtnsContainer).on('click', this.close.bind(this));
+        $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.i18n.done + '</button>').appendTo(confirmationBtnsContainer).on('click', this.done.bind(this));
         confirmationBtnsContainer.appendTo(this.footer);
       }
     }, {
@@ -11111,7 +11153,8 @@ $jscomp.polyfill = function (e, r, p, m) {
   'use strict';
 
   var _defaults = {
-    classes: ''
+    classes: '',
+    dropdownOptions: {}
   };
 
   /**
@@ -11131,7 +11174,12 @@ $jscomp.polyfill = function (e, r, p, m) {
     function Select(el, options) {
       _classCallCheck(this, Select);
 
+      // Don't init if browser default version
       var _this64 = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this, Select, el, options));
+
+      if (_this64.$el.hasClass('browser-default')) {
+        return _possibleConstructorReturn(_this64);
+      }
 
       _this64.el.M_Select = _this64;
 
@@ -11144,6 +11192,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       _this64.isMultiple = _this64.$el.prop('multiple');
 
       // Setup
+      _this64.el.tabIndex = -1;
       _this64._keysSelected = {};
       _this64._valueDict = {}; // Maps key to original and generated option element.
       _this64._setupDropdown();
@@ -11199,7 +11248,6 @@ $jscomp.polyfill = function (e, r, p, m) {
         });
         this.el.removeEventListener('change', this._handleSelectChangeBound);
         this.input.removeEventListener('click', this._handleInputClickBound);
-        this.input.removeEventListener('focus', this._handleInputFocusBound);
       }
 
       /**
@@ -11337,7 +11385,8 @@ $jscomp.polyfill = function (e, r, p, m) {
 
         // Initialize dropdown
         if (!this.el.disabled) {
-          var dropdownOptions = {};
+          var dropdownOptions = $.extend({}, this.options.dropdownOptions);
+
           if (this.isMultiple) {
             dropdownOptions.closeOnClick = false;
           }

@@ -131,6 +131,21 @@
         <li class="bold"><a href="showcase.html" class="waves-effect waves-teal">Showcase</a></li>
         <li class="bold"><a href="themes.html" class="waves-effect waves-teal">Themes</a></li>
       </ul>
+      <!-- Sidebar BSA-->
+      <script src="//m.servedby-buysellads.com/monetization.js" type="text/javascript"></script>
+      <div class="bsa-cpc"></div>
+      <script>
+        (function(){
+          if(typeof _bsa !== 'undefined' && _bsa) {
+          _bsa.init('default', 'CKYD55QM', 'placement:materializecsscom', {
+            target: '.bsa-cpc',
+            align: 'horizontal',
+            disable_css: 'true'
+          });
+            }
+        })();
+        
+      </script>
       <div class="patreon-ad"><a href="https://www.patreon.com/materialize" target="_blank" class="waves-effect">Become a Patron</a></div>
     </header>
     <main><div class="container">
@@ -263,6 +278,12 @@
                 <td>Specify a selector for a DOM element to render the calendar in, by default it will be placed before the input.</td>
               </tr>
               <tr>
+                <td>i18n</td>
+                <td>Object</td>
+                <td>See i18n documentation.</td>
+                <td>Internationalization options.</td>
+              </tr>
+              <tr>
                 <td>events</td>
                 <td>Array</td>
                 <td>[]</td>
@@ -311,9 +332,14 @@
 
             <tbody>
               <tr>
-                <td>dd</td>
+                <td>d</td>
                 <td>Date of the month.</td>
                 <td>1-31</td>
+              </tr>
+              <tr>
+                <td>dd</td>
+                <td>Date of the month (2 digits).</td>
+                <td>01-31</td>
               </tr>
               <tr>
                 <td>ddd</td>
@@ -326,9 +352,14 @@
                 <td>Sunday-Saturday</td>
               </tr>
               <tr>
-                <td>mm</td>
+                <td>m</td>
                 <td>Month of the year.</td>
                 <td>1-12</td>
+              </tr>
+              <tr>
+                <td>mm</td>
+                <td>Month of the year (2 digits).</td>
+                <td>01-12</td>
               </tr>
               <tr>
                 <td>mmm</td>
@@ -341,7 +372,7 @@
                 <td>January-December</td>
               </tr>
               <tr>
-                <td>yyy</td>
+                <td>yy</td>
                 <td>2-digit year.</td>
                 <td>17</td>
               </tr>
@@ -349,6 +380,121 @@
                 <td>yyyy</td>
                 <td>4-digit year.</td>
                 <td>2017</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <div class="section">
+          <h5>Datepicker Internationalization options</h5>
+          <p>Use these in the i18n option to localize the datepicker.</p>
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Text</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>clear</td>
+                <td>'Clear'</td>
+              </tr>
+              <tr>
+                <td>today</td>
+                <td>'Today'</td>
+              </tr>
+              <tr>
+                <td>done</td>
+                <td>'Ok'</td>
+              </tr>
+              <tr>
+                <td>previousMonth</td>
+                <td>'‹'</td>
+              </tr>
+              <tr>
+                <td>nextMonth</td>
+                <td>'›'</td>
+              </tr>
+              <tr>
+                <td>months</td>
+                <td>
+                  <pre>
+[
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <td>monthsShort</td>
+                <td>
+                  <pre>
+[
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <td>weekdays</td>
+                <td>
+                  <pre>
+[
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+]
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <td>weekdaysShort</td>
+                <td>
+                  <pre>
+[
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat'
+]
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <td>weekdaysAbbrev</td>
+                <td>['S','M','T','W','T','F','S']</td>
               </tr>
             </tbody>
           </table>
@@ -532,22 +678,10 @@ instance.destroy();
                 <td>Millisecond offset from the defaultTime.</td>
               </tr>
               <tr>
-                <td>doneText</td>
-                <td>String</td>
-                <td>'Ok'</td>
-                <td>Done button text.</td>
-              </tr>
-              <tr>
-                <td>clearText</td>
-                <td>String</td>
-                <td>'Clear'</td>
-                <td>Clear button text.</td>
-              </tr>
-              <tr>
-                <td>cancelText</td>
-                <td>String</td>
-                <td>'Cancel'</td>
-                <td>Cancel button text.</td>
+                <td>i18n</td>
+                <td>Object</td>
+                <td>See i18n documentation.</td>
+                <td>Internationalization options.</td>
               </tr>
               <tr>
                 <td>autoClose</td>
@@ -570,6 +704,36 @@ instance.destroy();
             </tbody>
           </table>
         </div>
+
+
+        <div class="section">
+          <h5>Timepicker Internationalization options</h5>
+          <p>Use these in the i18n option to localize the timepicker.</p>
+          <table class="striped">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Text</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>clear</td>
+                <td>'Clear'</td>
+              </tr>
+              <tr>
+                <td>cancel</td>
+                <td>'Cancel'</td>
+              </tr>
+              <tr>
+                <td>done</td>
+                <td>'Ok'</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
 
 
         <div class="section">
@@ -724,14 +888,42 @@ instance.destroy();
                 </div>
                 <div class="patreon-footer-ad">
                   <a href="https://www.stillio.com/" target="_blank">
-                    <img src="https://s13.postimg.org/6poml0u6v/stillio-logo-1000.png" alt="Stillio">
+                    <img src="https://s13.postimg.org/hcpyykzbr/stillio-as-logo-1000-green.png" title="Capture and archive website screenshots automatically with Stillio" alt="Capture and archive website screenshots automatically with Stillio">
                   </a>
                 </div>
-                <div class="patreon-footer-ad white-ad">
+                <div class="patreon-footer-ad">
                   <a href="https://gaggle.email/" target="_blank">
-                    <img src="https://s13.postimg.org/6bnal87gn/gaggle-mail-logo-transparent_1.png" alt="Gaggle Mail">
+                    <img src="https://s13.postimg.org/oqns3tzmf/gaggle-mail-logo.png" alt="Gaggle Mail">
                   </a>
                 </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://icons8.com/material-icons" target="_blank">
+                    <img src="https://s13.postimg.org/q0lliz153/icons8-logo-opencollective.png" alt="Icons8">
+                  </a>
+                </div>
+              </div>
+              <div class="col s12">
+                <div class="patreon-footer-ad">
+                  <a href="https://keymedium.com" target="_blank">
+                    <img src="https://s13.postimg.org/m9c0wcpxz/2017-10-23-logo-refresh.png" alt="Philadelphia Web Design & SEO Agency">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://www.brandnewweb.nl" target="_blank">
+                    <img src="https://s13.postimg.org/3pxqiuqyf/brandnewweb.png" alt="Brand New Web">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://typestack.nl" target="_blank">
+                    <img src="https://s13.postimg.org/6k0vwalev/typestack.png" alt="Open source fully loaded CMS in #2019">
+                  </a>
+                </div>
+                <div class="patreon-footer-ad">
+                  <a href="https://clicktime.com/?utm_campaign=material" target="_blank">
+                    <img src="https://s13.postimg.org/7q4vv0p47/clicktime-logo-400.png" alt="ClickTime">
+                  </a>
+                </div>
+
               </div>
             </div>
 
@@ -739,6 +931,7 @@ instance.destroy();
               © 2014-2017 Materialize, All rights reserved.
               <a class="grey-text text-darken-1 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">MIT License</a>
             </div>
+
           </div>
         </div>
       </div>
