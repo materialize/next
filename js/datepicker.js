@@ -93,6 +93,11 @@
 
       this.options = $.extend({}, Datepicker.defaults, options);
 
+      // make sure i18n defaults are not lost when only few i18n option properties are passed
+      if(!!options && options.hasOwnProperty('i18n') && typeof options.i18n === 'object') {
+         this.options.i18n = $.extend({}, Datepicker.defaults.i18n, options.i18n);
+      }
+
       // Remove time component from minDate and maxDate options
       if (this.options.minDate) this.options.minDate.setHours(0, 0, 0, 0);
       if (this.options.maxDate) this.options.maxDate.setHours(0, 0, 0, 0);
@@ -602,13 +607,23 @@
           this.render(this.calendars[c].year, this.calendars[c].month, randId);
       }
 
+      // Destroy Materialize Select
+      let oldYearSelect = this.calendarEl.querySelector('.pika-select-year');
+      if (oldYearSelect) {
+        M.FormSelect.getInstance(oldYearSelect).destroy();
+      }
+      let oldMonthSelect = this.calendarEl.querySelector('.pika-select-month');
+      if (oldMonthSelect) {
+        M.FormSelect.getInstance(oldMonthSelect).destroy();
+      }
+
       this.calendarEl.innerHTML = html;
 
       // Init Materialize Select
       let yearSelect = this.calendarEl.querySelector('.pika-select-year');
       let monthSelect = this.calendarEl.querySelector('.pika-select-month');
-      M.Select.init(yearSelect, {classes: 'select-year', dropdownOptions: {container: document.body, constrainWidth: false}});
-      M.Select.init(monthSelect, {classes: 'select-month', dropdownOptions: {container: document.body, constrainWidth: false}});
+      M.FormSelect.init(yearSelect, {classes: 'select-year', dropdownOptions: {container: document.body, constrainWidth: false}});
+      M.FormSelect.init(monthSelect, {classes: 'select-month', dropdownOptions: {container: document.body, constrainWidth: false}});
 
       // Add change handlers for select
       yearSelect.addEventListener('change', this._handleYearChange.bind(this));

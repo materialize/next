@@ -3409,6 +3409,12 @@ nav ul a span.badge {
   margin-top: calc(24px - 11px);
 }
 
+table span.badge {
+  display: inline-block;
+  float: none;
+  margin-left: auto;
+}
+
 /* This is needed for some mobile phones to display the Google Icon font properly */
 .material-icons {
   text-rendering: optimizeLegibility;
@@ -6656,7 +6662,6 @@ textarea.materialize-textarea {
 .autocomplete-content {
   margin-top: -8px;
   margin-bottom: 8px;
-  display: block;
   opacity: 1;
   position: static;
 }
@@ -8459,10 +8464,10 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
   visibility: visible;
   -webkit-animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
           animation: pulse-animation 1s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-  -webkit-transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s;
-  transition: opacity .3s, transform .3s, visibility 0s 1s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
+  transition: opacity .3s, visibility 0s 1s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, visibility 0s 1s;
+  transition: opacity .3s, transform .3s, visibility 0s 1s, -webkit-transform .3s;
 }
 
 .tap-target {
@@ -8515,10 +8520,10 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 
 .tap-target-wave::after {
   visibility: hidden;
-  -webkit-transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, visibility 0s, -webkit-transform .3s;
-  transition: opacity .3s, transform .3s, visibility 0s;
-  transition: opacity .3s, transform .3s, visibility 0s, -webkit-transform .3s;
+  -webkit-transition: opacity .3s, visibility 0s, -webkit-transform .3s;
+  transition: opacity .3s, visibility 0s, -webkit-transform .3s;
+  transition: opacity .3s, transform .3s, visibility 0s;
+  transition: opacity .3s, transform .3s, visibility 0s, -webkit-transform .3s;
   z-index: -1;
 }
 
@@ -8674,9 +8679,9 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 /* Date Display */
 .datepicker-date-display {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-flex: 1 auto;
+      -ms-flex: 1 auto;
+          flex: 1 auto;
   background-color: #26a69a;
   color: #fff;
   padding: 20px 22px;
@@ -8700,9 +8705,9 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 /* Calendar */
 .datepicker-calendar-container {
   -webkit-box-flex: 2.5;
-  -webkit-flex: 2.5;
-      -ms-flex: 2.5;
-          flex: 2.5;
+  -webkit-flex: 2.5 auto;
+      -ms-flex: 2.5 auto;
+          flex: 2.5 auto;
 }
 
 .datepicker-table {
@@ -8838,9 +8843,9 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 /* Clock Digital Display */
 .timepicker-digital-display {
   -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-flex: 1 auto;
+      -ms-flex: 1 auto;
+          flex: 1 auto;
   background-color: #26a69a;
   padding: 10px;
   font-weight: 300;
@@ -8884,9 +8889,9 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
 /* Analog Clock Display */
 .timepicker-analog-display {
   -webkit-box-flex: 2.5;
-  -webkit-flex: 2.5;
-      -ms-flex: 2.5;
-          flex: 2.5;
+  -webkit-flex: 2.5 auto;
+      -ms-flex: 2.5 auto;
+          flex: 2.5 auto;
 }
 
 .timepicker-plate {
