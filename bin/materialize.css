@@ -4899,6 +4899,7 @@ small {
 
 .card .card-action {
   position: relative;
+  background-color: #fff;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
   padding: 16px 24px;
 }
@@ -5078,8 +5079,13 @@ small {
   font-size: 14px;
   text-overflow: ellipsis;
   overflow: hidden;
-  -webkit-transition: color .28s ease;
-  transition: color .28s ease;
+  -webkit-transition: color .28s ease, background-color .28s ease;
+  transition: color .28s ease, background-color .28s ease;
+}
+
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+  background-color: rgba(246, 178, 181, 0.2);
+  outline: none;
 }
 
 .tabs .tab a:hover, .tabs .tab a.active {
@@ -6084,9 +6090,6 @@ label {
 :-ms-input-placeholder {
   color: #d1d1d1;
 }
-::-ms-input-placeholder {
-  color: #d1d1d1;
-}
 ::placeholder {
   color: #d1d1d1;
 }
@@ -6516,6 +6519,14 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
 }
 
 .input-field > label:not(.label-icon).active {
+  -webkit-transform: translateY(-14px) scale(0.8);
+          transform: translateY(-14px) scale(0.8);
+  -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+}
+
+.input-field > input[type=date]:not(.browser-default) + label,
+.input-field > input[type=time]:not(.browser-default) + label {
   -webkit-transform: translateY(-14px) scale(0.8);
           transform: translateY(-14px) scale(0.8);
   -webkit-transform-origin: 0 0;
@@ -7119,17 +7130,6 @@ select {
   border: 1px solid #f2f2f2;
   border-radius: 2px;
   height: 3rem;
-}
-
-.input-field select {
-  display: block;
-  position: absolute;
-  width: 0;
-  pointer-events: none;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
 }
 
 .select-label {
@@ -8784,6 +8784,7 @@ input[type=range].focused:focus:not(.active)::-ms-thumb {
           justify-content: space-between;
 }
 
+.datepicker-cancel,
 .datepicker-clear,
 .datepicker-today,
 .datepicker-done {

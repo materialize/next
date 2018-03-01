@@ -10,6 +10,7 @@
     onOpenEnd: null,
     onCloseStart: null,
     onCloseEnd: null,
+    preventScrolling: true
   };
 
 
@@ -60,6 +61,10 @@
        * @type {Boolean}
        */
       this.isDragged = false;
+
+      // Window size variables for window resize checks
+      this.lastWindowWidth = window.innerWidth;
+      this.lastWindowHeight = window.innerHeight;
 
       this._createOverlay();
       this._createDragTarget();
@@ -348,12 +353,18 @@
      * Handle Window Resize
      */
     _handleWindowResize() {
-      if (window.innerWidth > 992) {
-        this.open();
+      // Only handle horizontal resizes
+      if (this.lastWindowWidth !== window.innerWidth) {
+        if (window.innerWidth > 992) {
+          this.open();
+        }
+        else {
+          this.close();
+        }
       }
-      else {
-        this.close();
-      }
+
+      this.lastWindowWidth = window.innerWidth;
+      this.lastWindowHeight = window.innerHeight;
     }
 
     _setupClasses() {
@@ -421,7 +432,9 @@
 
       // Handle non-fixed Sidenav
       } else {
-        this._preventBodyScrolling();
+        if (this.options.preventScrolling) {
+          this._preventBodyScrolling();
+        }
 
         if (!this.isDragged || this.percentOpen != 1) {
           this._animateIn();
